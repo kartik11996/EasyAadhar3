@@ -28,6 +28,8 @@
         <module>aggregator</module>
         <module>operator-service</module>
         <module>customer-service</module>
+        <module>payment-service</module>
+        <module>authentication-service</module>
 
     </modules>
 
