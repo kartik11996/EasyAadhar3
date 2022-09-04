@@ -31,7 +31,7 @@
         <module>payment-service</module>
         <module>authentication-service</module>
         <module>email-service</module>
-
+        <module>slot-booking-service</module>
     </modules>
 
     <dependencies>
