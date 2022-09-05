@@ -27,7 +27,11 @@
         <module>api-gateway</module>
         <module>aggregator</module>
         <module>operator-service</module>
-
+        <module>customer-service</module>
+        <module>payment-service</module>
+        <module>authentication-service</module>
+        <module>email-service</module>
+        <module>slot-booking-service</module>
     </modules>
 
     <dependencies>
