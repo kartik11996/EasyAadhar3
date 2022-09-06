@@ -23,6 +23,4 @@ public class AadharCenterRegister {
     private List<String> transportFacilities;
     private Date postedDate;
 
-
-
 }
