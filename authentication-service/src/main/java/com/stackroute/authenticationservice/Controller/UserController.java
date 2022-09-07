@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
     private UserService Uservice;
+    @Autowired
+    public UserController(UserService uservice) {
+        Uservice = uservice;
+    }
 
     @PostMapping("/add")
     public void addUser(@RequestBody Users user){
