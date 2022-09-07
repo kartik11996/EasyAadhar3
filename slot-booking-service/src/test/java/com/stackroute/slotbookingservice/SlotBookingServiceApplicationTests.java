@@ -1,4 +1,4 @@
-package com.stackroute.slot.bookingservice;
+package com.stackroute.slotbookingservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

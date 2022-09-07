@@ -1,4 +1,4 @@
-package com.stackroute.slot.bookingservice;
+package com.stackroute.slotbookingservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
