@@ -1,4 +1,2 @@
-package repository;
-
-public interface Repo {
+package repository;public interface Repo {
 }
