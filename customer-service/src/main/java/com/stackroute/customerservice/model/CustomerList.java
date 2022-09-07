@@ -8,13 +8,13 @@ import lombok.Data;
 @Data
 public class CustomerList {
 
-	private String name;
+    private String name;
     private String email;
     private String mobile;
     private String address;
     private String nationality;
     private String gender;
-    private String DOB;
+    private String dOB;
     private String parentName;
     private String typeOfRelation;
     private String relativeAadharNumber;
