@@ -1,12 +1,14 @@
 package com.stackroute.operatorservice.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
 @Data
 public class AadharCenterRegister {
+    @Id
     private String centerId;
     private String centerName;
     private String openingTime;
@@ -24,3 +26,4 @@ public class AadharCenterRegister {
     private Date postedDate;
 
 }
+
