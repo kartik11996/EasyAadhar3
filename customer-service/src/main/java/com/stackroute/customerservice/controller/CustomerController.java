@@ -1,6 +1,7 @@
 package com.stackroute.customerservice.controller;
 
 import java.io.FileNotFoundException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class CustomerController {
     }
     
     @PostMapping("/addCustomer")
-    public String saveCustomer(@RequestBody CustomerList customerList) {
+    public String saveCustomer(@RequestBody CustomerList customerList) throws FileAlreadyExistsException{
         repo.save(customerList); 													
         return "Customer has been added successfully";
     }
@@ -41,7 +42,7 @@ public class CustomerController {
     }
     
     @GetMapping("/findAllCustomer/{id}")
-    public Optional<CustomerList> getCustomer(@PathVariable String Id) {
+    public Optional<CustomerList> getCustomer(@PathVariable String Id) throws FileNotFoundException {
     	return repo.findById(Id);
     }
 
