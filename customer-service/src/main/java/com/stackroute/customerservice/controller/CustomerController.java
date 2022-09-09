@@ -21,7 +21,7 @@ import com.stackroute.customerservice.service.CustomerService;
 
 @SpringBootApplication
 @RestController
-@RequestMapping("/CustometDetails")
+@RequestMapping("/CustomerDetails")
 public class CustomerController { 
 	
 	@Autowired
