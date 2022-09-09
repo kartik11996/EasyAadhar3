@@ -23,10 +23,12 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 		
 	@Override
-	public String updateCustomer(CustomerList customerList) throws FileNotFoundException {
+	public String updateById(String id) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	@Override
 	public CustomerList getCustomerById(String id) {
 		// TODO Auto-generated method stub
@@ -39,11 +41,9 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 
-	@Override
-	public CustomerList updateCustomerList(CustomerList customerList) throws FileNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+
+}
 
 	
 
@@ -82,6 +82,14 @@ public class CustomerServiceImpl implements CustomerService {
 //		// TODO Auto-generated method stub
 //		return CustomerRepo.findAll();
 //	}
+//	@Override
+//	public String updateCustomer(CustomerList customerList) throws FileNotFoundException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	@Override
+//	public CustomerList updateCustomerList(CustomerList customerList) throws FileNotFoundException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 
-}

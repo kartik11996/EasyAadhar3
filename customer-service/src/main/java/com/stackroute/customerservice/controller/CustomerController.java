@@ -46,8 +46,8 @@ public class CustomerController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateCustomer(@RequestBody CustomerList customerList) throws FileNotFoundException {
-        return customerService.updateCustomer(customerList);
+    public String updateCustomer(@PathVariable String Id) throws FileNotFoundException {
+        return customerService.updateById(Id);
     }
     
     @DeleteMapping("/delete/{id}")

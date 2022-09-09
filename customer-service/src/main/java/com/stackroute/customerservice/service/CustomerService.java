@@ -14,14 +14,17 @@ public interface CustomerService {
 	CustomerList saveCustomerList(CustomerList customerList) throws FileAlreadyExistsException;
 
 	//Update
-	String updateCustomer(CustomerList customerList) throws FileNotFoundException;
-	CustomerList updateCustomerList(CustomerList customerList) throws FileNotFoundException;
+	String updateById(String id) throws FileNotFoundException;
+
+//	String updateCustomer(CustomerList customerList) throws FileNotFoundException;
+//	CustomerList updateCustomerList(CustomerList customerList) throws FileNotFoundException;
 	
 	//Read
 	CustomerList getCustomerById(String id)	;
 		
 	//Delete
 	void deleteById(String id);
+
 
 	
 

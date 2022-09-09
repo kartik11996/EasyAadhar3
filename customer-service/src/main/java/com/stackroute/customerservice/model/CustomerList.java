@@ -13,12 +13,8 @@ import lombok.Setter;
 @Setter
 public class CustomerList {
 
-<<<<<<< HEAD
 	private String name;
 	@Id 
-=======
-    private String name;
->>>>>>> b35d50bc37931e1c03b97a637bc01fb2d049346b
     private String email;
 	@Id
     private String mobile;
