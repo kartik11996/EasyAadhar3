@@ -26,7 +26,6 @@ public class AadharCenterCont {
         this.ACService=aadharCenterService;
     }
 
-
     @PostMapping("/saveaadharcenter")
     public AadharCenterRegister create(@RequestBody AadharCenterRegister aadharcenter){
         return ACService.create(aadharcenter);
@@ -37,7 +36,7 @@ public class AadharCenterCont {
         return ACService.findAll();
     }
     @PutMapping("/updateaadharcenter/{id}")
-    public AadharCenterRegister update(@PathVariable String centerId, @RequestBody AadharCenterRegister aadharcenter){
+    public AadharCenterRegister update(@PathVariable("id") String centerId, @RequestBody AadharCenterRegister aadharcenter){
         return ACService.update(centerId, aadharcenter);
     }
 
@@ -55,10 +54,9 @@ public class AadharCenterCont {
     }
 
     @GetMapping("/getaadharcenter/{id}")
-    Optional<AadharCenterRegister>getAadharCenter(String centerId){
+    Optional<AadharCenterRegister>getAadharCenter(@PathVariable("id") String centerId){
         return ACService.getAadharCenter(centerId);
     }
-
 
 
 
