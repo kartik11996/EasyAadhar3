@@ -5,12 +5,16 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.customerservice.model.CustomerList;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+	
+	@Autowired
+	
 	
 	@Override
 	public Iterable<CustomerList> getAllCustomers() {
