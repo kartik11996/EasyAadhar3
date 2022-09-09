@@ -27,12 +27,12 @@ public class AadharCenterRegister {
     private String address;
     private String city;
     private String state;
-    /*private long locationPin;
-    private BufferedImage visualsOfCenter;
+    private long locationPin;
+    private byte[] visualsOfCenter;
     private String centerDescription;
     private String contactInfo;
     private List<String>placesNearBy;
     private List<String> transportFacilities;
-    private Date postedDate;*/
+    private Date postedDate;
 }
 
