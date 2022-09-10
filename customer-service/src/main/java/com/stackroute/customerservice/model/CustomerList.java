@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Document(collection = "CustomerList") 
+@Document(collection = "CustomerDetails") 
 @Data
 @Getter
 @Setter

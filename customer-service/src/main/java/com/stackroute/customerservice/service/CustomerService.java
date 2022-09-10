@@ -10,27 +10,33 @@ import com.stackroute.customerservice.model.CustomerList;
 public interface CustomerService {
 	
 	
-	Iterable<CustomerList> getAllCustomers();
+//	Iterable<CustomerList> getAllCustomers();
 	
-	String save(CustomerList customer) throws FileAlreadyExistsException;
-
-	String updateById(String id) throws FileNotFoundException;
-
-	CustomerList updateCustomerList(CustomerList customerList) throws FileNotFoundException;
-	
-	CustomerList getCustomerById(String id);	
-
 	List<CustomerList> findAll();
+	
+	String save(CustomerList CustomerDetails) throws FileAlreadyExistsException;
+
+//	CustomerList save(String id, CustomerList CustomerDetails) throws FileAlreadyExistsException;
+	
+//	CustomerList saveCustomerList(CustomerList customerList) throws FileAlreadyExistsException;
+	
+	String updateById(String id, CustomerList CustomerDetails) throws FileNotFoundException;
+
+//	CustomerList updateById(String id, CustomerList CustomerDetails) throws FileNotFoundException;
+
+//	CustomerList updateCustomerList(CustomerList customerList) throws FileNotFoundException;
+	
+	Optional<CustomerList> getCustomerById(String id) throws FileNotFoundException;	
 
 	Optional<CustomerList> getCustomerByMobile(String mobile) throws FileNotFoundException;
 
 	Optional<CustomerList> getCustomerByEmail(String email) throws FileNotFoundException;
 
-	CustomerList saveCustomerList(CustomerList customerList) throws FileAlreadyExistsException;
-
-	String update(String mobile, CustomerList customer) throws FileNotFoundException;
-
 	void deleteById(String id);
+
+//	String save(String id, CustomerList CustomerDetails) throws FileAlreadyExistsException;
+
+//	String updateById(String id, CustomerList customer) throws FileNotFoundException;
 
 
 }

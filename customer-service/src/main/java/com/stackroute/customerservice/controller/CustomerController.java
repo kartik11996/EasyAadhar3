@@ -38,9 +38,9 @@ public class CustomerController {
 	
     
     @PostMapping("/addCustomer")
-    public String save(@RequestBody CustomerList Customer){
+    public String save(@RequestBody CustomerList CustomerDetails){
         try {
-			return customerService.save(Customer);
+			return customerService.save(CustomerDetails);
 		} catch (FileAlreadyExistsException e) {
 			e.printStackTrace();
 		}        return "Customer has been added successfully";
@@ -79,9 +79,9 @@ public class CustomerController {
 
     
     @PutMapping("/updateCustomer/{id}")
-    public String updateCustomer(@PathVariable("id") String id, @RequestBody CustomerList customer){
+    public String updateCustomer(@PathVariable("id") String id, @RequestBody CustomerList customerDetails){
         try {
-			return customerService.update(id, customer);
+			return customerService.updateById(id, customerDetails);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
