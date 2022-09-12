@@ -1,9 +1,10 @@
 package com.stackroute.customerservice.controller;
 
 import java.io.FileNotFoundException;
-import java.nio.file.FileAlreadyExistsException;
+import java.io.IOException;
+//import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,8 +29,6 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 
-    
-    
     public CustomerController(CustomerService customerService	) {
         this.customerService = customerService;
     }
@@ -38,12 +37,15 @@ public class CustomerController {
 	
     
     @PostMapping("/addCustomer")
-    public String save(@RequestBody CustomerList CustomerDetails){
-        try {
-			return customerService.save(CustomerDetails);
-		} catch (FileAlreadyExistsException e) {
-			e.printStackTrace();
-		}        return "Customer has been added successfully";
+    public String save(@RequestBody CustomerList CustomerDetails) throws IOException{
+    	System.out.println(CustomerDetails);
+//        try {
+//			return customerService.save(CustomerDetails);
+//		} catch (FileAlreadyExistsException e) {
+//			e.printStackTrace();
+//		} 
+    	customerService.saveCustomer(CustomerDetails);
+        return "Customer has been added successfully";
 
     }
         
@@ -51,16 +53,16 @@ public class CustomerController {
     
     @GetMapping("/findAllCustomers")
     List<CustomerList>getAllCenter(){
-        return customerService.findAll();
+        return customerService.findAllCustomers();
     }
     
 
-    @GetMapping("/findAllCustomers/{id}")
-    public Optional<CustomerList>getCustomerByMobile(@PathVariable("id") String id){
+    @GetMapping("/findCustomer/{id}")
+    public CustomerList getCustomerById(@PathVariable("id") String id){
+    	System.out.println(id);
         try {
-			return customerService.getCustomerByMobile(id);
+			return customerService.getCustomerById(id);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
