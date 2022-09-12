@@ -47,12 +47,13 @@ public class CustomerController {
     	customerService.saveCustomer(CustomerDetails);
         return "Customer has been added successfully";
 
-    }
+    } 
+//    return it as obj
         
 
     
     @GetMapping("/findAllCustomers")
-    List<CustomerList>getAllCenter(){
+    List<CustomerList>getAllCustomers(){
         return customerService.findAllCustomers();
     }
     
