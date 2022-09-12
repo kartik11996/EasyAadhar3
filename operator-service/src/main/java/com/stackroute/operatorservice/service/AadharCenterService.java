@@ -1,17 +1,20 @@
 package com.stackroute.operatorservice.service;
 
 import com.stackroute.operatorservice.model.AadharCenterRegister;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public interface AadharCenterService {
-    Optional<AadharCenterRegister> getAadharCenter(String id);
+    AadharCenterRegister getAadharCenter(String id);
     List<AadharCenterRegister> findByCity(String city);
-    AadharCenterRegister create(AadharCenterRegister aadharcenter);
-    AadharCenterRegister update(String id, AadharCenterRegister aadharcenter);
-    void deleteById(String id);
+    AadharCenterRegister create(AadharCenterRegister aadharcenter, MultipartFile file) throws IOException;
+    AadharCenterRegister update(String id, AadharCenterRegister aadharcenter, MultipartFile file) throws IOException;
+    String deleteById(String id);
     List<AadharCenterRegister> findAll();
+    List<AadharCenterRegister> findBylocationPin(long locationPin);
+
 
 
 

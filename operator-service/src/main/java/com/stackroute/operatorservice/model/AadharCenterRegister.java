@@ -8,7 +8,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
 @Data
@@ -17,8 +16,7 @@ import java.util.List;
 @Document(indexName = "aadharcenter")
 public class AadharCenterRegister {
     @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String centerId;
     private String centerName;
     private String openingTime;
