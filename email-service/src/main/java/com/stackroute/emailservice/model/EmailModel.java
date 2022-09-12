@@ -2,7 +2,7 @@ package com.stackroute.emailservice.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "EmailModel")
+
 public class EmailModel {
     private String UserEmail;
     private String MailSubject;
