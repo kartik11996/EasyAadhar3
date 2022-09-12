@@ -1,6 +1,8 @@
 package com.stackroute.paymentservice.model;
 
+import java.sql.Date;
 import java.util.Map;
+import lombok.Data;
 //import javax.persistence.Entity;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.Id;
@@ -9,7 +11,7 @@ import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
+@Data
 
 @Component
 @ConfigurationProperties("paytm.payment.sandbox")
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class Payment {
 //	@Id
   //  @Column(name="orderId")
-   // private Long orderId = null;
+    
 	private String merchantId;
 	
 	private String merchantKey;

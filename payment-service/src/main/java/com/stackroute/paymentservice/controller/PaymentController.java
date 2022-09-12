@@ -3,6 +3,7 @@ package com.stackroute.paymentservice.controller;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import  org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,24 +14,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paytm.pg.merchant.PaytmChecksum;
 import com.stackroute.paymentservice.model.Payment;
+import com.stackroute.paymentservice.model.PaymentHistory;
+import com.stackroute.paymentservice.repositrory.PaymentRepository;
 
 @Controller
+
 public class PaymentController {
 	
 	@Autowired
 	private Payment paytmDetailPojo;
 	@Autowired
 	private Environment env;
+//	@Autowired 
+//	private PaymentHistory stat;
 	
+	@Autowired
+	private PaymentRepository paymentrepository;
+	//@ResponseBody
 	@GetMapping("/")
 	public String home() {
+		
 		return "home";
 	}
 
+	@ResponseBody
 	 @PostMapping(value = "/submitPaymentDetail")
 	    public ModelAndView getRedirect(@RequestParam(name = "CUST_ID") String customerId,
 	                                    @RequestParam(name = "TXN_AMOUNT") String transactionAmount,
@@ -45,6 +58,8 @@ public class PaymentController {
 	        parameters.put("TXN_AMOUNT", transactionAmount);
 	        parameters.put("CUST_ID", customerId);
 	        String checkSum = getCheckSum(parameters);
+	        System.out.println("CHEKSUM" +checkSum);
+	        
 	        parameters.put("CHECKSUMHASH", checkSum);
 	        modelAndView.addAllObjects(parameters);
 	        return modelAndView;
@@ -56,6 +71,7 @@ public class PaymentController {
 
 	        Map<String, String[]> mapData = request.getParameterMap();
 	        TreeMap<String, String> parameters = new TreeMap<String, String>();
+	        
 	        String paytmChecksum = "";
 	        for (Entry<String, String[]> requestParamsEntry : mapData.entrySet()) {
 	            if ("CHECKSUMHASH".equalsIgnoreCase(requestParamsEntry.getKey())){
@@ -67,7 +83,32 @@ public class PaymentController {
 	        String result;
 
 	        boolean isValideChecksum = false;
-	        System.out.println("RESULT : "+parameters.toString());
+	      //  PaymentHistory.setDetails().forEach((k, v) -> parameters.put(k, v));
+	        System.out.println("RESULTS : "+parameters.toString());
+	        JSONObject json = new JSONObject(parameters);
+	        System.out.println(json);
+	       PaymentHistory Hist = new PaymentHistory ();
+	      Hist.setORDERID(parameters.get("ORDERID"));
+	      Hist.setBANKNAME(parameters.get("BANKNAME"));
+	      Hist.setGATEWAYNAME(parameters.get("GATEWAYNAME"));
+	      Hist.setCURRENCY(parameters.get("CURRENCY"));
+	      Hist.setRESPMSG(parameters.get("RESPMSG"));
+	      Hist.setSTATUS(parameters.get("STATUS"));
+	      Hist.setPAYMENTMODE(parameters.get("PAYMENTMODE"));
+	      Hist.setRESPCODE(parameters.get("RESPCODE"));
+	      Hist.setTXNID(parameters.get("TXNID"));
+	      Hist.setTXNAMOUNT(parameters.get("TXNAMOUNT"));
+	      Hist.setTXNDATE(parameters.get("TXNDATE"));
+	      Hist.setBANKTXNID(parameters.get("BANKTXNID"));
+	      this.paymentrepository.save(Hist);
+	       
+	       
+	       
+	       
+	       
+	   
+	       // Exception Handling
+	       
 	        try {
 	            isValideChecksum = validateCheckSum(parameters, paytmChecksum);
 	            if (isValideChecksum && parameters.containsKey("RESPCODE")) {
