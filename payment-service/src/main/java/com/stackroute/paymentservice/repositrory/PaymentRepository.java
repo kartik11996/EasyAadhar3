@@ -1,4 +1,9 @@
 package com.stackroute.paymentservice.repositrory;
 
-public class PaymentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.stackroute.paymentservice.model.PaymentHistory;
+
+public interface PaymentRepository extends JpaRepository<PaymentHistory, Long> {
+
 }
