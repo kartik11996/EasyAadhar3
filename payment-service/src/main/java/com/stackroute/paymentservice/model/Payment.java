@@ -18,8 +18,7 @@ import org.springframework.stereotype.Component;
 //@Entity
 //@Table(name="payments")
 public class Payment {
-//	@Id
-  //  @Column(name="orderId")
+
     
 	private String merchantId;
 	
