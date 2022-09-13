@@ -20,8 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paytm.pg.merchant.PaytmChecksum;
 import com.stackroute.paymentservice.model.Payment;
-import com.stackroute.paymentservice.model.PaymentHistory;
+import com.stackroute.paymentservice.model.Reciept;
 import com.stackroute.paymentservice.repositrory.PaymentRepository;
+import com.stackroute.paymentservice.services.recieptService;
 
 @Controller
 
@@ -87,7 +88,7 @@ public class PaymentController {
 	        System.out.println("RESULTS : "+parameters.toString());
 	        JSONObject json = new JSONObject(parameters);
 	        System.out.println(json);
-	       PaymentHistory Hist = new PaymentHistory ();
+	       Reciept Hist = new Reciept ();
 	      Hist.setORDERID(parameters.get("ORDERID"));
 	      Hist.setBANKNAME(parameters.get("BANKNAME"));
 	      Hist.setGATEWAYNAME(parameters.get("GATEWAYNAME"));
@@ -138,7 +139,7 @@ public class PaymentController {
 	private String getCheckSum(TreeMap<String, String> parameters) throws Exception {
 		return PaytmChecksum.generateSignature(parameters, paytmDetailPojo.getMerchantKey());
 	}
-	
+ 
 	
 	
 }

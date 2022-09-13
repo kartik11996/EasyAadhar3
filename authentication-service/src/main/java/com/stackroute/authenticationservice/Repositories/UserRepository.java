@@ -1,7 +1,16 @@
 package com.stackroute.authenticationservice.Repositories;
 
-import com.stackroute.authenticationservice.Models.Users;
+import com.stackroute.authenticationservice.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<Users,Integer> {
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
+
+    Boolean existsByUsername(String username);
+
+
 }

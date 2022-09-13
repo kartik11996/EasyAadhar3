@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public String saveCustomer(CustomerList customerDetails) throws FileAlreadyExistsException {
 		 CR.save(customerDetails);
-		 System.out.println("from service meathod " + customerDetails);
+		 System.out.println("from service method " + customerDetails);
 		 return "Customer has been added successfully";
 	}
 			
