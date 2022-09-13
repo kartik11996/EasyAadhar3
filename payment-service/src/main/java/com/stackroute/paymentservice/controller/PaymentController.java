@@ -30,14 +30,14 @@ public class PaymentController {
 	
 	@Autowired
 	private Payment paytmDetailPojo;
-	@Autowired
-	private Environment env;
-//	@Autowired 
-//	private PaymentHistory stat;
 	
 	@Autowired
+	private Environment env;
+
+	@Autowired
 	private PaymentRepository paymentrepository;
-	//@ResponseBody
+	
+	
 	@GetMapping("/")
 	public String home() {
 		

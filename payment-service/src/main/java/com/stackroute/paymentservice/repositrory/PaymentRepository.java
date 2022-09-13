@@ -7,6 +7,6 @@ import com.stackroute.paymentservice.model.Reciept;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Reciept, String> {
-	//Reciept findreciept (String ORDERID );
+	
 
 }
