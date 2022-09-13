@@ -1,6 +1,9 @@
 package com.stackroute.operatorservice.controller;
 
 import com.google.gson.Gson;
+import com.stackroute.operatorservice.exception.BusinessException;
+import com.stackroute.operatorservice.exception.ControllerException;
+import com.stackroute.operatorservice.exception.NoSuchCenterExistsForIDException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
 import com.stackroute.operatorservice.service.AadharCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class AadharCenterCont {
 
     @Autowired
     private AadharCenterService ACService;
+    private ResponseEntity responseEntity;
 
     public AadharCenterCont(){
 
@@ -34,20 +39,43 @@ public class AadharCenterCont {
         Gson gson = new Gson();
         AadharCenterRegister aadharCenterObj = gson.fromJson(aadharcenter, AadharCenterRegister.class);
         Date date = new Date();
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY");
-        //Date str = formatter.format(date);
-        aadharCenterObj.setPostedDate(date);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+        String str = formatter.format(date);
+        aadharCenterObj.setPostedDate(str);
 
-        AadharCenterRegister ACR = ACService.create(aadharCenterObj,file);
-        ResponseEntity<AadharCenterRegister> responseEntity = new ResponseEntity<>(ACR, HttpStatus.CREATED);
-        return responseEntity;
+        try{
+            AadharCenterRegister ACR = ACService.create(aadharCenterObj,file);
+            responseEntity = new ResponseEntity<AadharCenterRegister>(ACR, HttpStatus.CREATED);
+            return responseEntity;
+        }
+        catch (BusinessException e){
+            ControllerException ce= new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+
+        catch (Exception e){
+            ControllerException ce = new ControllerException("611","Something went wrong in controller layer");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+
 
     }
 
-    @GetMapping("/findallcenters")
-    List<AadharCenterRegister>findAllCenter(){
-        return ACService.findAll();
+    @GetMapping("/getallcenters")
+    public ResponseEntity<?>findAllCenter(){
+        try {
+            List<AadharCenterRegister>listOfAllCenters=ACService.getAllCenter();
+            return new ResponseEntity<List<AadharCenterRegister>>(listOfAllCenters,HttpStatus.OK);
+        }catch (BusinessException e) {
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+
     }
+
 
 
     @PutMapping("/updateaadharcenter/{id}")
@@ -55,43 +83,87 @@ public class AadharCenterCont {
         Gson gson = new Gson();
         AadharCenterRegister aadharCenterObj = gson.fromJson(aadharcenter, AadharCenterRegister.class);
         Date date = new Date();
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY");
-        //Date str = formatter.format(date);
-        aadharCenterObj.setPostedDate(date);
+        SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");
+        String str = formatter.format(date);
+        aadharCenterObj.setPostedDate(str);
+        try {
+            AadharCenterRegister ACR = ACService.update(centerId, aadharCenterObj,file);
+            responseEntity = new ResponseEntity<AadharCenterRegister>(ACR, HttpStatus.CREATED);
+            return responseEntity;
+        }catch (BusinessException e) {
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
 
 
-        AadharCenterRegister ACR = ACService.update(centerId, aadharCenterObj,file);
-        ResponseEntity<AadharCenterRegister> responseEntity = new ResponseEntity<>(ACR, HttpStatus.CREATED);
-        return responseEntity;
+
     }
 
 
     @DeleteMapping("/deleteaadharcenter/{id}")
-    String deleteById(@PathVariable String id){
-        try{
-            return ACService.deleteById(id);
+    public ResponseEntity<?> deleteCenterById(@PathVariable("id") String id){
+        try {
+            ACService.deleteById(id);
+            return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+        }catch (BusinessException e) {
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
-        catch(Exception e){
-            return "No such center exits with this id";
-        }
+
     }
 
     @GetMapping("getcenterbycity/{city}")
-    List<AadharCenterRegister>findByCity(@PathVariable String city){
-        return ACService.findByCity(city);
-    }
+    public ResponseEntity<?>getCenterByCity(@PathVariable("city") String city){
+        try {
+            List<AadharCenterRegister>listOfCenterByCity = ACService.getCenterByCity(city);
+            return new ResponseEntity<List<AadharCenterRegister>>(listOfCenterByCity,HttpStatus.OK);
+        }catch (BusinessException e) {
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
 
+    }
     @GetMapping("/getcenterbyid/{id}")
-    public AadharCenterRegister getAadharCenter(@PathVariable("id") String centerId){
-        return ACService.getAadharCenter(centerId);
+    public ResponseEntity<?> getCenterById(@PathVariable("id") String centerId) throws NoSuchCenterExistsForIDException {
+        try {
+            AadharCenterRegister centerRetrieve = ACService.getCenterById(centerId);
+            return new ResponseEntity<AadharCenterRegister>(centerRetrieve, HttpStatus.OK);
+        }
+        catch (BusinessException e){
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
+            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/getcenterbylocationpin/{locationPin}")
-    List<AadharCenterRegister>findByPinCode(@PathVariable long locationPin){
-        return ACService.findBylocationPin(locationPin);
+    public ResponseEntity<?>findByPinCode(@PathVariable long locationPin){
+        try {
+            List<AadharCenterRegister> centerRetrieve = ACService.getCenterByLocationPin(locationPin);
+            return new ResponseEntity<List<AadharCenterRegister>>(centerRetrieve,HttpStatus.OK);
+        }catch (BusinessException e) {
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
-
-
-
 }
+

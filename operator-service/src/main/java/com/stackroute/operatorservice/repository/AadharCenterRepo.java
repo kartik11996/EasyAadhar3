@@ -9,7 +9,5 @@ public interface AadharCenterRepo extends ElasticsearchRepository<AadharCenterRe
     //List<AadharCenterRegister>findByState(String state);
     List<AadharCenterRegister>findByCity(String city);
     List<AadharCenterRegister> findAll();
-
-
     List<AadharCenterRegister> findBylocationPin(long locationPin);
 }
