@@ -1,4 +1,12 @@
 package com.stackroute.paymentservice.repositrory;
 
-public class PaymentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.stackroute.paymentservice.model.Reciept;
+
+@Repository
+public interface PaymentRepository extends JpaRepository<Reciept, String> {
+	//Reciept findreciept (String ORDERID );
+
 }
