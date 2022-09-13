@@ -31,6 +31,6 @@ public class AadharCenterRegister {
     private String contactInfo;
     private List<String>placesNearBy;
     private List<String> transportFacilities;
-    private Date postedDate;
+    private String postedDate;
 }
 

@@ -1,23 +1,18 @@
 package com.stackroute.operatorservice.exception;
 
-public class NoSuchCenterExistsException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-        private String message;
+//@ResponseStatus(code= HttpStatus.NOT_FOUND, reason = "No Center Exists ")
+public class NoSuchCenterExistsException extends  RuntimeException{
+    private String msg;
 
-        public NoSuchCenterExistsException() {}
+    public NoSuchCenterExistsException(String msg){
+        super(msg);
+        this.msg=msg;
+    }
+    public NoSuchCenterExistsException(){
 
-        public NoSuchCenterExistsException(String msg)
-        {
-            super(msg);
-            this.message = msg;
-        }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
