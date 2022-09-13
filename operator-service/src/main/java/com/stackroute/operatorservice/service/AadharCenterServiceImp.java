@@ -31,7 +31,7 @@ public class AadharCenterServiceImp implements AadharCenterService{
         } catch (IllegalArgumentException e) {
             throw new BusinessException("606", "given center id is null, please send some id to be searched" + e.getMessage());
         } catch (NoSuchElementException e) {
-            throw new BusinessException("607", "given center id does not exist in Database" + e.getMessage());
+            throw new BusinessException("607", "given center id does not exist in Database." + e.getMessage());
         } catch (Exception e) {
             throw new BusinessException("609", "Something went wrong in Service layer while fetching center" + e.getMessage());
         }
@@ -78,9 +78,28 @@ public class AadharCenterServiceImp implements AadharCenterService{
             throw new BusinessException("617","No center Exits with this id, Please choose another center ID");
         if(aadharcenter.getCenterName().isEmpty() || aadharcenter.getCenterName().length() ==0)
             throw new BusinessException("618", "Please send proper center name, center Name is empty");
+
         try{
-            aadharcenter.setVisualsOfCenter(file.getBytes());
-            return ACRepo.save(aadharcenter);
+            if(acr!=null){
+               // acr.setCenterId(aadharcenter.getCenterId());
+                acr.setVisualsOfCenter(file.getBytes());
+                acr.setAddress(aadharcenter.getAddress());
+                acr.setCity(aadharcenter.getCity());
+                acr.setCenterDescription(aadharcenter.getCenterDescription());
+                acr.setAmenities(aadharcenter.getAmenities());
+                acr.setCenterName(aadharcenter.getCenterName());
+                acr.setClosingTime(aadharcenter.getClosingTime());
+                acr.setOpeningTime(aadharcenter.getOpeningTime());
+                acr.setContactInfo(aadharcenter.getContactInfo());
+                acr.setPostedDate(aadharcenter.getPostedDate());
+                acr.setLocationPin(aadharcenter.getLocationPin());
+                acr.setPlacesNearBy(aadharcenter.getPlacesNearBy());
+                acr.setState(aadharcenter.getState());
+                acr.setTransportFacilities(aadharcenter.getTransportFacilities());
+
+            }
+
+            return ACRepo.save(acr);
         }
         catch (IllegalArgumentException e){
             throw new BusinessException("619","given center details is null" + e.getMessage());
@@ -92,6 +111,9 @@ public class AadharCenterServiceImp implements AadharCenterService{
 
     @Override
     public void deleteById(String id) {
+        AadharCenterRegister acr = ACRepo.findById(id).get();
+        if(acr==null)
+            throw new BusinessException("617","No center Exits with this id, Please choose another center ID");
         try{
             ACRepo.deleteById(id);
         }catch(IllegalArgumentException e) {

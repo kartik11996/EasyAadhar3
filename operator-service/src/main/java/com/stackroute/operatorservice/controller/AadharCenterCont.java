@@ -3,7 +3,6 @@ package com.stackroute.operatorservice.controller;
 import com.google.gson.Gson;
 import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.exception.ControllerException;
-import com.stackroute.operatorservice.exception.NoSuchCenterExistsForIDException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
 import com.stackroute.operatorservice.service.AadharCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +38,9 @@ public class AadharCenterCont {
         Gson gson = new Gson();
         AadharCenterRegister aadharCenterObj = gson.fromJson(aadharcenter, AadharCenterRegister.class);
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-        String str = formatter.format(date);
-        aadharCenterObj.setPostedDate(str);
+      //  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+       // String str = formatter.format(date);
+        aadharCenterObj.setPostedDate(date);
 
         try{
             AadharCenterRegister ACR = ACService.create(aadharCenterObj,file);
@@ -54,11 +53,9 @@ public class AadharCenterCont {
         }
 
         catch (Exception e){
-            ControllerException ce = new ControllerException("611","Something went wrong in controller layer");
+            ControllerException ce = new ControllerException("621","Something went wrong in controller layer");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
     @GetMapping("/getallcenters")
@@ -70,7 +67,7 @@ public class AadharCenterCont {
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            ControllerException ce = new ControllerException("622","Something went wrong in controller");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
 
@@ -83,9 +80,9 @@ public class AadharCenterCont {
         Gson gson = new Gson();
         AadharCenterRegister aadharCenterObj = gson.fromJson(aadharcenter, AadharCenterRegister.class);
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");
-        String str = formatter.format(date);
-        aadharCenterObj.setPostedDate(str);
+       // SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");
+        //String str = formatter.format(date);
+        aadharCenterObj.setPostedDate(date);
         try {
             AadharCenterRegister ACR = ACService.update(centerId, aadharCenterObj,file);
             responseEntity = new ResponseEntity<AadharCenterRegister>(ACR, HttpStatus.CREATED);
@@ -94,7 +91,7 @@ public class AadharCenterCont {
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            ControllerException ce = new ControllerException("623","Something went wrong in controller");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
 
@@ -112,10 +109,9 @@ public class AadharCenterCont {
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            ControllerException ce = new ControllerException("624","Something went wrong in controller");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping("getcenterbycity/{city}")
@@ -127,13 +123,13 @@ public class AadharCenterCont {
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            ControllerException ce = new ControllerException("625","Something went wrong in controller");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
 
     }
     @GetMapping("/getcenterbyid/{id}")
-    public ResponseEntity<?> getCenterById(@PathVariable("id") String centerId) throws NoSuchCenterExistsForIDException {
+    public ResponseEntity<?> getCenterById(@PathVariable("id") String centerId) {
         try {
             AadharCenterRegister centerRetrieve = ACService.getCenterById(centerId);
             return new ResponseEntity<AadharCenterRegister>(centerRetrieve, HttpStatus.OK);
@@ -143,7 +139,7 @@ public class AadharCenterCont {
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e) {
-            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            ControllerException ce = new ControllerException("626","Something went wrong in controller");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
 
@@ -158,7 +154,7 @@ public class AadharCenterCont {
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("612","Something went wrong in controller");
+            ControllerException ce = new ControllerException("627","Something went wrong in controller");
             return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
         }
 

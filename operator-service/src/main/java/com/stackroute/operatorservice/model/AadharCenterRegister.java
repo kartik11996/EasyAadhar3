@@ -1,5 +1,6 @@
 package com.stackroute.operatorservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class AadharCenterRegister {
     private String contactInfo;
     private List<String>placesNearBy;
     private List<String> transportFacilities;
-    private String postedDate;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private Date postedDate;
 }
 
