@@ -10,9 +10,9 @@ import java.util.List;
 public interface AadharCenterService {
     AadharCenterRegister getCenterById(String id);
     List<AadharCenterRegister> getCenterByCity(String city);
-    AadharCenterRegister create(AadharCenterRegister aadharcenter, MultipartFile file) throws BusinessException;
-    AadharCenterRegister update(String id, AadharCenterRegister aadharcenter, MultipartFile file) throws BusinessException;
-    void deleteById(String id);
+    AadharCenterRegister create(AadharCenterRegister aadharcenter, MultipartFile file) throws BusinessException, IOException;
+    AadharCenterRegister update(String id, AadharCenterRegister aadharcenter, MultipartFile file) throws BusinessException, IOException;
+    boolean deleteById(String id);
     List<AadharCenterRegister> getAllCenter();
     List<AadharCenterRegister> getCenterByLocationPin(long locationPin);
 

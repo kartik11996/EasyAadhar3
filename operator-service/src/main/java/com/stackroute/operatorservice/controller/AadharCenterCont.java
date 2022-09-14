@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @SpringBootApplication
 @RestController
@@ -48,13 +49,11 @@ public class AadharCenterCont {
             return responseEntity;
         }
         catch (BusinessException e){
-            ControllerException ce= new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
         }
 
         catch (Exception e){
-            ControllerException ce = new ControllerException("621","Something went wrong in controller layer");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: 611"+"\nError Message: Something went wrong in controller layer", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -64,11 +63,9 @@ public class AadharCenterCont {
             List<AadharCenterRegister>listOfAllCenters=ACService.getAllCenter();
             return new ResponseEntity<List<AadharCenterRegister>>(listOfAllCenters,HttpStatus.OK);
         }catch (BusinessException e) {
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("622","Something went wrong in controller");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: 612"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -87,16 +84,19 @@ public class AadharCenterCont {
             AadharCenterRegister ACR = ACService.update(centerId, aadharCenterObj,file);
             responseEntity = new ResponseEntity<AadharCenterRegister>(ACR, HttpStatus.CREATED);
             return responseEntity;
-        }catch (BusinessException e) {
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
-        }catch (Exception e) {
-            ControllerException ce = new ControllerException("623","Something went wrong in controller");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
+        /*catch (NoSuchElementException e){
+            return new ResponseEntity<>("Error Code: 623"+"\nError Message: Id does not exist in database", HttpStatus.BAD_REQUEST);
         }
 
-
-
+*/     catch (NoSuchElementException e){
+            return  new ResponseEntity<>("Error Code: 618"+"\nError Messagee: No center Exits with this id, Please choose another center ID", HttpStatus.CONFLICT);
+        }
+        catch (BusinessException e) {
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
+        }catch (Exception e) {
+            return new ResponseEntity<>("Error Code: 613"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -106,11 +106,9 @@ public class AadharCenterCont {
             ACService.deleteById(id);
             return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
         }catch (BusinessException e) {
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("624","Something went wrong in controller");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: 614"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -120,13 +118,10 @@ public class AadharCenterCont {
             List<AadharCenterRegister>listOfCenterByCity = ACService.getCenterByCity(city);
             return new ResponseEntity<List<AadharCenterRegister>>(listOfCenterByCity,HttpStatus.OK);
         }catch (BusinessException e) {
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("625","Something went wrong in controller");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: 615"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
-
     }
     @GetMapping("/getcenterbyid/{id}")
     public ResponseEntity<?> getCenterById(@PathVariable("id") String centerId) {
@@ -135,14 +130,11 @@ public class AadharCenterCont {
             return new ResponseEntity<AadharCenterRegister>(centerRetrieve, HttpStatus.OK);
         }
         catch (BusinessException e){
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
         }
         catch (Exception e) {
-            ControllerException ce = new ControllerException("626","Something went wrong in controller");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("StatusCode: 616,"+"\nError Message:Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping("/getcenterbylocationpin/{locationPin}")
@@ -151,11 +143,10 @@ public class AadharCenterCont {
             List<AadharCenterRegister> centerRetrieve = ACService.getCenterByLocationPin(locationPin);
             return new ResponseEntity<List<AadharCenterRegister>>(centerRetrieve,HttpStatus.OK);
         }catch (BusinessException e) {
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
         }catch (Exception e) {
-            ControllerException ce = new ControllerException("627","Something went wrong in controller");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+          //  ControllerException ce = new ControllerException();
+            return new ResponseEntity<>("Error Code: 617"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
 
 
