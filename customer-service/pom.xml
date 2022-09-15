@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.stackroute</groupId>
 		<artifactId>EasyAadhar</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>com.stackroute</groupId>
 	<artifactId>customer-service</artifactId>
@@ -39,6 +39,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<!-- <dependency> <groupId>org.projectlombok</groupId> <artifactId>lombok</artifactId> 
