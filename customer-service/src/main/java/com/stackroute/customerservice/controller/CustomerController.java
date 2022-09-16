@@ -1,13 +1,14 @@
 package com.stackroute.customerservice.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 //import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 //import java.util.Optional;
 
+import com.stackroute.customerservice.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,86 +19,90 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stackroute.customerservice.model.*;
-import com.stackroute.customerservice.service.CustomerService;
+import com.stackroute.customerservice.service.*;
 
 @SpringBootApplication
 @RestController
 @RequestMapping("/CustomerDetails")
-public class CustomerController { 
+public class CustomerController {
 	
 	@Autowired
-	private CustomerService customerService;
+	private CustService custService;
 	
 
-    public CustomerController(CustomerService customerService	) {
-        this.customerService = customerService;
+    public CustomerController(CustService custService) {this.custService = custService;
     }
-    
-	// test in postman
-	
-    
-    @PostMapping("/addCustomer")
-    public String save(@RequestBody CustomerList CustomerDetails) throws IOException{
-    	System.out.println(CustomerDetails);
-//        try {
-//			return customerService.save(CustomerDetails);
-//		} catch (FileAlreadyExistsException e) {
-//			e.printStackTrace();
-//		} 
-    	customerService.saveCustomer(CustomerDetails);
-        return "Customer has been added successfully";
 
-    } 
-//    return it as obj
-        
+    @PostMapping("/addCustomer")
+    public ResponseEntity<?> addCustomer(@RequestBody CustomerList customer) {
+        try {
+            if (customer.getName() == null
+                    || customer.getEmail() == null
+                    || customer.getMobile() == null
+                    || customer.getAddress() == null
+                    || customer.getNationality() == null
+//                    || customer.getDOB() == null
+                    || customer.getParentName() == null
+                    || customer.getTypeOfRelation() == null
+                    || customer.getRelativeAadharNumber().isEmpty()) {
+                return new ResponseEntity<>("Please enter all the required fields", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(custService.saveCustomer(customer), HttpStatus.CREATED);
+
+        } catch (CustomerAlreadyExistsException e) {
+            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+        }
+    }
 
     
     @GetMapping("/findAllCustomers")
     List<CustomerList>getAllCustomers(){
-        return customerService.findAllCustomers();
+        return custService.findAllCustomers();
     }
-    
 
-    @GetMapping("/findCustomer/{id}")
-    public CustomerList getCustomerById(@PathVariable("id") String id){
-    	System.out.println(id);
+
+    @GetMapping("/getCustomer/{id}")
+    public ResponseEntity<?> getCustomerById(@PathVariable String id) {
         try {
-			return customerService.getCustomerById(id);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+            return new ResponseEntity<>(custService.getCustomerById(id), HttpStatus.OK);
+
+        } catch (CustomerNotFoundException e) {
+            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+        }
     }
 
-//    @GetMapping("/findAllCustomers/{id}")
-//    public Optional<CustomerList>getCustomerByEmail(@PathVariable("id") String email){
-//        try {
-//			return customerService.getCustomerByEmail(email);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
-//    }
 
-    
     @PutMapping("/updateCustomer/{id}")
-    public String updateCustomer(@PathVariable("id") String id, @RequestBody CustomerList customerDetails){
+    public ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerList customer) {
         try {
-			return customerService.updateById(id, customerDetails);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "Customer Details are updated";
+            if (customer.getName() == null
+                    || customer.getEmail() == null
+                    || customer.getMobile() == null
+                    || customer.getAddress() == null
+                    || customer.getNationality() == null
+//                    || customer.getDOB() == null
+                    || customer.getParentName() == null
+                    || customer.getTypeOfRelation() == null
+                    || customer.getRelativeAadharNumber().isEmpty()) {
+                return new ResponseEntity<>("Please enter all the required fields", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(custService.updateCustomerById(id, customer), HttpStatus.CREATED);
+
+        } catch (CustomerNotFoundException e) {
+            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+        }
     }
 
-    
     
     @DeleteMapping("/deleteCustomer/{id}")
-    void deleteById(@PathVariable String id){
-    	customerService.deleteById(id);
-    }
+    public ResponseEntity<?> deleteCustomerById(@PathVariable String id) {
+        try {
+            custService.deleteCustomerById(id);
+            return new ResponseEntity<>("Customer Details deleted from the database with Email Id: "+id, HttpStatus.OK);
 
+        } catch (CustomerNotFoundException e) {
+            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+        }
+    }
 
 }
