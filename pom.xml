@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.stackroute</groupId>
     <artifactId>EasyAadhar</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.0</version>
     <name>EasyAadhar</name>
     <description>Product Boilerplate Project</description>
     <packaging>pom</packaging>

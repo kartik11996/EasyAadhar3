@@ -12,6 +12,8 @@ import com.stackroute.paymentservice.exception.RecieptNotFoundException;
 import com.stackroute.paymentservice.model.Reciept;
 import com.stackroute.paymentservice.services.recieptService;
 
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,9 @@ public class RecieptController {
 			return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
 		}
 	}
+	
+	@ApiOperation(value = "Get payment details by id" , notes = "Return the payment details as per the id")
+	
 	@GetMapping("/allpayment")
 	public ResponseEntity<?> getAllPayment() {
 		try {
@@ -42,4 +47,4 @@ public class RecieptController {
 		}
 	}
 }
-	
+

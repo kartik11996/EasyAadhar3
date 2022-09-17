@@ -18,7 +18,7 @@ public class Reciept {
 	
 	public Reciept() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 
@@ -39,12 +39,6 @@ public class Reciept {
  private String TXNID;
 // private Map<String, String> details;
  
-// public int getSlno() {
-//		return slno;
-//	}
-//	public void setSlno(int slno) {
-//		this.slno = slno;
-//	}
 
 	public String getORDERID() {
 		return ORDERID;

@@ -6,7 +6,6 @@ import com.stackroute.paymentservice.model.Reciept;
 
 public interface recieptService {
 
-	
 
 	List<Reciept> getAllPayment();
 

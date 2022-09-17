@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.stackroute.paymentservice.exception.RecieptNotFoundException;
 import com.stackroute.paymentservice.model.Reciept;
-
-import com.stackroute.paymentservice.repositrory.PaymentRepository;
+import com.stackroute.paymentservice.repository.PaymentRepository;
 
 @Service
 public class recieptServiceImpl implements recieptService {

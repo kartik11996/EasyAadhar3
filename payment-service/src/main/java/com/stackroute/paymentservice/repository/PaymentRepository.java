@@ -1,4 +1,4 @@
-package com.stackroute.paymentservice.repositrory;
+package com.stackroute.paymentservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

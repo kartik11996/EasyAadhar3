@@ -21,11 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.paytm.pg.merchant.PaytmChecksum;
 import com.stackroute.paymentservice.model.Payment;
 import com.stackroute.paymentservice.model.Reciept;
-import com.stackroute.paymentservice.repositrory.PaymentRepository;
+import com.stackroute.paymentservice.repository.PaymentRepository;
 import com.stackroute.paymentservice.services.recieptService;
 
 @Controller
-
 public class PaymentController {
 	
 	@Autowired
@@ -65,8 +64,9 @@ public class PaymentController {
 	        modelAndView.addAllObjects(parameters);
 	        return modelAndView;
 	    }
+
 	 
-	 
+	
 	 @PostMapping(value = "/pgresponse")
 	    public String getResponseRedirect(HttpServletRequest request, Model model) {
 
@@ -105,10 +105,7 @@ public class PaymentController {
 	       
 	       
 	       
-	       
-	       
-	   
-	       // Exception Handling
+	  // Exception Handling
 	       
 	        try {
 	            isValideChecksum = validateCheckSum(parameters, paytmChecksum);
