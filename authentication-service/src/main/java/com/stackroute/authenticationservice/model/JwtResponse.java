@@ -1,4 +1,5 @@
-package com.stackroute.authenticationservice.payload.response;
+package com.stackroute.authenticationservice.model;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageResponse {
-    private String message;
+public class JwtResponse {
+
+    private User user;
+    private String jwtToken;
+
 }

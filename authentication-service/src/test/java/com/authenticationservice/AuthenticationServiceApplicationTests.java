@@ -1,4 +1,4 @@
-package com.stackroute.authenticationservice;
+package com.authenticationservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
