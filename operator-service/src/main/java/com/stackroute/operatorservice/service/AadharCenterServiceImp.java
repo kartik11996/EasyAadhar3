@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @Service
 public class AadharCenterServiceImp implements AadharCenterService{
-    @Autowired
     private AadharCenterRepo ACRepo;
 
     public AadharCenterServiceImp(){
 
     }
+    @Autowired
     public AadharCenterServiceImp(AadharCenterRepo aadharCenterRepo ){
         this.ACRepo=aadharCenterRepo;
     }
