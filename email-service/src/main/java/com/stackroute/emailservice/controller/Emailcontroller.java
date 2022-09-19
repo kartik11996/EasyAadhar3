@@ -15,9 +15,9 @@ public class Emailcontroller {
 	
 	@PostMapping("/send")
 	public String SendEmail(@RequestBody EmailModel m)throws MailSendException {
-		//System.out.println(m.getMailBody());
-		//return service.sendSimpleMessage(m.getUserMail(),m.getMailSubject(),m.getMailBody());
-		return "msg send";
+
+		return service.sendSimpleMessage(m.getUserMail(),m.getMailSubject(),m.getMailBody());
+
 	}
 
 }
