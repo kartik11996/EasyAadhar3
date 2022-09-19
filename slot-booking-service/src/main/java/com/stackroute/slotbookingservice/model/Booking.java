@@ -1,5 +1,6 @@
 package com.stackroute.slotbookingservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import java.util.Date;
 public class Booking {
     @Id
     private int appointmentId;
+	@JsonFormat(pattern="dd/MM/yyyy")
     private Date appointmentDate;
     private String appointmentTime;
     private String customername;
