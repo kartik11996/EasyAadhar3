@@ -2,7 +2,6 @@ package com.stackroute.operatorservice.controller;
 
 import com.google.gson.Gson;
 import com.stackroute.operatorservice.exception.BusinessException;
-import com.stackroute.operatorservice.exception.ControllerException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
 import com.stackroute.operatorservice.service.AadharCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +12,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/aadharcenter")
 public class AadharCenterCont {
 
-    @Autowired
+
     private AadharCenterService ACService;
     private ResponseEntity responseEntity;
 
     public AadharCenterCont(){
 
     }
+    @Autowired
     public AadharCenterCont(AadharCenterService aadharCenterService){
         this.ACService=aadharCenterService;
     }
