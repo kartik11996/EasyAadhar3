@@ -24,6 +24,6 @@ public interface CustService<CustomerList> {
 
 	List<CustomerList> getCustomerByMobile(String mobile) throws CustomerNotFoundException;
 
-	void deleteCustomerById(String id) throws CustomerNotFoundException;
+	boolean deleteCustomerById(String id) throws CustomerNotFoundException;
 
 }
