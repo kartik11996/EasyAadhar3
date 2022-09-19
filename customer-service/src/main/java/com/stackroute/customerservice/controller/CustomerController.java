@@ -26,10 +26,9 @@ import com.stackroute.customerservice.service.*;
 @RequestMapping("/CustomerDetails")
 public class CustomerController {
 	
-	@Autowired
 	private CustService custService;
-	
 
+    @Autowired
     public CustomerController(CustService custService) {this.custService = custService;
     }
 
@@ -74,6 +73,7 @@ public class CustomerController {
 
     @PutMapping("/updateCustomer/{id}")
     public ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerList customer) {
+//        System.out.println(id);
         try {
             if (customer.getName() == null
                     || customer.getEmail() == null

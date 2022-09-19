@@ -41,7 +41,23 @@ public class CustServiceImpl implements CustService {
 	
 	@Override
 	public String updateCustomerById(String id, CustomerList customerDetails) throws CustomerNotFoundException {
-		CR.save(customerDetails);
+		Optional<CustomerList> findById = CR.findById(id);
+		CustomerList customer = findById.get();
+//		CustomerList customer = new CustomerList();
+		if (findById.isPresent()){
+			customer.setName(customerDetails.getName());
+			customer.setEmail(customerDetails.getEmail());
+			customer.setAddress(customerDetails.getAddress());
+			customer.setDOB(customerDetails.getDOB());
+			customer.setMobile(customerDetails.getMobile());
+			customer.setGender(customerDetails.getGender());
+			customer.setNationality(customerDetails.getNationality());
+			customer.setParentName(customerDetails.getParentName());
+			customer.setRelativeAadharNumber(customerDetails.getRelativeAadharNumber());
+			customer.setTypeOfRelation(customerDetails.getTypeOfRelation());
+
+		}
+		CR.save(customer);
 		return "Customer Details are updated";
 	}
 	
@@ -64,8 +80,10 @@ public class CustServiceImpl implements CustService {
 
 
 	@Override
-	public void deleteCustomerById(String id) throws CustomerNotFoundException {
+	public boolean deleteCustomerById(String id) throws CustomerNotFoundException {
 		CR.deleteById(id);
+
+		return true;
 	}
 
 }
