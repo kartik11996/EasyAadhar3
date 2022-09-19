@@ -1,3 +1,4 @@
+/*
 package com.stackroute.customerservice.configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -15,3 +16,4 @@ public class SwaggerConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2).select().build();
 	    }
 }
+*/
