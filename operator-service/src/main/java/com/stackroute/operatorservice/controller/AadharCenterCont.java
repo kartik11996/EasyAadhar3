@@ -40,6 +40,7 @@ public class AadharCenterCont {
       //  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
        // String str = formatter.format(date);
         aadharCenterObj.setPostedDate(date);
+        System.out.println("1");
 
         try{
             AadharCenterRegister ACR = ACService.create(aadharCenterObj,file);

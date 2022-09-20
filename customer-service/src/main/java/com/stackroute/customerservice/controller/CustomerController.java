@@ -26,10 +26,10 @@ import com.stackroute.customerservice.service.*;
 @RequestMapping("/CustomerDetails")
 public class CustomerController {
 	
-	private CustService custService;
+	private CustomerService customerService;
 
     @Autowired
-    public CustomerController(CustService custService) {this.custService = custService;
+    public CustomerController(CustomerService customerService) {this.customerService = customerService;
     }
 
     @PostMapping("/addCustomer")
@@ -46,7 +46,7 @@ public class CustomerController {
                     || customer.getRelativeAadharNumber().isEmpty()) {
                 return new ResponseEntity<>("Please enter all the required fields", HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(custService.saveCustomer(customer), HttpStatus.CREATED);
+            return new ResponseEntity<>(customerService.saveCustomer(customer), HttpStatus.CREATED);
 
         } catch (CustomerAlreadyExistsException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
@@ -56,14 +56,14 @@ public class CustomerController {
     
     @GetMapping("/findAllCustomers")
     List<CustomerList>getAllCustomers(){
-        return custService.findAllCustomers();
+        return customerService.findAllCustomers();
     }
 
 
     @GetMapping("/getCustomer/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable String id) {
         try {
-            return new ResponseEntity<>(custService.getCustomerById(id), HttpStatus.OK);
+            return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK);
 
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
@@ -86,7 +86,7 @@ public class CustomerController {
                     || customer.getRelativeAadharNumber().isEmpty()) {
                 return new ResponseEntity<>("Please enter all the required fields", HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(custService.updateCustomerById(id, customer), HttpStatus.CREATED);
+            return new ResponseEntity<>(customerService.updateCustomerById(id, customer), HttpStatus.CREATED);
 
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
@@ -97,7 +97,7 @@ public class CustomerController {
     @DeleteMapping("/deleteCustomer/{id}")
     public ResponseEntity<?> deleteCustomerById(@PathVariable String id) {
         try {
-            custService.deleteCustomerById(id);
+            customerService.deleteCustomerById(id);
             return new ResponseEntity<>("Customer Details deleted from the database with Email Id: "+id, HttpStatus.OK);
 
         } catch (CustomerNotFoundException e) {
