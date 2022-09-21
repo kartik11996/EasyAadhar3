@@ -31,6 +31,7 @@ public class AadharCenterServiceImp implements AadharCenterService{
     public AadharCenterRegister create(AadharCenterRegister aadharcenter, MultipartFile file) throws IOException {
         if(aadharcenter.getCenterName().isEmpty() || aadharcenter.getCenterName().length() ==0)
             throw new BusinessException("601", "Please send proper center name, center Name is empty");
+            System.out.println("2");
 
         aadharcenter.setVisualsOfCenter(file.getBytes());
         System.out.println(file.getBytes());

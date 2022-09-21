@@ -2,7 +2,7 @@ package com.stackroute.authenticationservice.controller;
 
 import javax.annotation.PostConstruct;
 
-import com.stackroute.authenticationservice.configuration.RabbitMqConfiguration;
+//import com.stackroute.authenticationservice.configuration.RabbitMqConfiguration;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping({"/registerNewUser"})
     public ResponseEntity<?> registerNewUser(@RequestBody User user) throws UserAlreadyExistException {
     	try {
-            template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,user.getUserName());
+//            template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,user.getUserName());
 
             return new ResponseEntity<>( userService.registerNewUser(user),HttpStatus.OK);
         

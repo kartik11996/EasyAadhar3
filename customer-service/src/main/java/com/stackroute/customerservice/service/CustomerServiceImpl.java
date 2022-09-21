@@ -11,16 +11,16 @@ import com.stackroute.customerservice.model.*;
 import com.stackroute.customerservice.repository.*;
 
 @Service
-public class CustServiceImpl implements CustService {
+public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private CustomerRepo CR;
 	
-	public CustServiceImpl() {
+	public CustomerServiceImpl() {
 
 	}
 	
-	public CustServiceImpl(CustomerRepo customerRepo ){
+	public CustomerServiceImpl(CustomerRepo customerRepo ){
         this.CR=customerRepo;
     }
 	
