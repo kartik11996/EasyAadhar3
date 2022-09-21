@@ -20,6 +20,7 @@ public class AadharCenterServiceImp implements AadharCenterService{
     public AadharCenterServiceImp(){
 
     }
+
     @Autowired
     public AadharCenterServiceImp(AadharCenterRepo aadharCenterRepo ){
         this.ACRepo=aadharCenterRepo;
@@ -31,9 +32,10 @@ public class AadharCenterServiceImp implements AadharCenterService{
         if(aadharcenter.getCenterName().isEmpty() || aadharcenter.getCenterName().length() ==0)
             throw new BusinessException("601", "Please send proper center name, center Name is empty");
 
-            aadharcenter.setVisualsOfCenter(file.getBytes());
-            AadharCenterRegister savedCenter = ACRepo.save(aadharcenter);
-            return savedCenter;
+        aadharcenter.setVisualsOfCenter(file.getBytes());
+        System.out.println(file.getBytes());
+        AadharCenterRegister savedCenter = ACRepo.save(aadharcenter);
+        return savedCenter;
     }
 
     @Override
