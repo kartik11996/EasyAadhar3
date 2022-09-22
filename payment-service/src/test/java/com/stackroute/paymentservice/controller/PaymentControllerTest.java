@@ -46,15 +46,12 @@ class PaymentControllerTest {
     void testGetRedirect() throws Exception {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException
-        //       at com.stackroute.paymentservice.controller.PaymentController.getRedirect(PaymentController.java:52)
+        
         //   In order to prevent getRedirect(String, String, String)
         //   from throwing NullPointerException, add constructors or factory
         //   methods that make it easier to construct fully initialized objects used in
         //   getRedirect(String, String, String).
-        //   See https://diff.blue/R013 to resolve this issue.
+        
 
         (new PaymentController()).getRedirect("42", "10", "42");
     }
