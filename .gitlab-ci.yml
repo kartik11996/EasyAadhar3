@@ -1,4 +1,4 @@
-cache:
+gitcache:
   key: "maven3"
   paths:
     - .m2/repository
