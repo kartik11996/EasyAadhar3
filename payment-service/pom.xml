@@ -39,7 +39,7 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
-    <groupId>com.paytm</groupId>
+    <groupId>com.paytm.pg</groupId>
     <artifactId>paytm-checksum</artifactId>
     <version>1.2.0</version>
 </dependency>
