@@ -35,7 +35,7 @@ test_coverage:
     - v1.0.3
     - stage
   script:
-    - mvn clean install
+    - mvn clean install -DskipTests
     - cat aggregator/target/site/jacoco-aggregate/index.html
   artifacts:
     paths:
