@@ -7,7 +7,7 @@
 		<artifactId>EasyAadhar</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.stackroute</groupId>
+
 	<artifactId>slot-booking-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>slot-booking-service</name>
