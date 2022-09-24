@@ -3,15 +3,13 @@ package com.stackroute.authenticationservice.controller;
 import javax.annotation.PostConstruct;
 
 //import com.stackroute.authenticationservice.configuration.RabbitMqConfiguration;
+import com.stackroute.authenticationservice.configuration.RabbitMqConfiguration;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stackroute.authenticationservice.exception.UserAlreadyExistException;
 import com.stackroute.authenticationservice.model.User;
@@ -33,11 +31,11 @@ public class UserController {
 
 
     @PostMapping({"/registerNewUser"})
-    public ResponseEntity<?> registerNewUser(@RequestBody User user) throws UserAlreadyExistException {
+    public ResponseEntity<?> registerNewUser(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
-//            template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,user.getUserName());
-
-            return new ResponseEntity<>( userService.registerNewUser(user),HttpStatus.OK);
+            User user=userService.registerNewUser(userName,userPassword);
+          template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,userName);
+            return new ResponseEntity<>(user ,HttpStatus.OK);
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);
@@ -46,10 +44,10 @@ public class UserController {
 
     @PostMapping({"/registerNewOperator"})
    
-    public ResponseEntity<?> registerNewOperator(@RequestBody User user) throws UserAlreadyExistException {
+    public ResponseEntity<?> registerNewOperator(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
     		
-        return new ResponseEntity<>( userService.registerNewOperator(user),HttpStatus.OK);
+        return new ResponseEntity<>( userService.registerNewOperator(userName,userPassword),HttpStatus.OK);
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);

@@ -49,14 +49,15 @@ public class UserService {
  
     }
 
-    public User registerNewUser(User user) throws UserAlreadyExistException {
-    	if(userDao.findById(user.getUserName()).isEmpty()) {
-    	
+    public User registerNewUser(String userName,String userPassword) throws UserAlreadyExistException {
+    	if(userDao.findById(userName).isEmpty()) {
+    	User user=new User();
         Role role = roleDao.findById("User").get();
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(role);
         user.setRole(userRoles);
-        user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+        user.setUserName(userName);
+        user.setUserPassword(getEncodedPassword(userPassword));
 
         return userDao.save(user);
     	}else {
@@ -65,14 +66,15 @@ public class UserService {
     	}
     }
     
-    public User registerNewOperator(User user) throws UserAlreadyExistException {
-    	if(userDao.findById(user.getUserName()).isEmpty()) {
-        	
+    public User registerNewOperator(String userName,String userPassword) throws UserAlreadyExistException {
+    	if(userDao.findById(userName).isEmpty()) {
+            User user=new User();
             Role role = roleDao.findById("Operator").get();
             Set<Role> userRoles = new HashSet<>();
             userRoles.add(role);
             user.setRole(userRoles);
-            user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+            user.setUserName(userName);
+            user.setUserPassword(getEncodedPassword(userPassword));
 
             return userDao.save(user);
         	}else {

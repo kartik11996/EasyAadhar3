@@ -22,6 +22,8 @@ import java.util.Date;
 public class Booking {
     @Id
     private int appointmentId;
+
+	private String emailId;
 	@JsonFormat(pattern="dd/MM/yyyy")
     private Date appointmentDate;
     private String appointmentTime;
