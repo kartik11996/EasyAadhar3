@@ -5,7 +5,6 @@ import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
 import com.stackroute.operatorservice.service.AadharCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +17,17 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/aadharcenter")
-public class AadharCenterCont {
+public class AadharCenterController {
 
 
     private AadharCenterService ACService;
     private ResponseEntity responseEntity;
 
-    public AadharCenterCont(){
+    public AadharCenterController(){
 
     }
     @Autowired
-    public AadharCenterCont(AadharCenterService aadharCenterService){
+    public AadharCenterController(AadharCenterService aadharCenterService){
         this.ACService=aadharCenterService;
     }
 

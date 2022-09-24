@@ -31,6 +31,7 @@
         <module>payment-service</module>
         <module>authentication-service</module>
 
+        <module>email-service</module>
         <module>slot-booking-service</module>
     </modules>
 
@@ -52,6 +53,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jacoco</groupId>
@@ -194,11 +197,13 @@
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>3.1.9</version>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.6</version>
             </plugin>
+
         </plugins>
     </reporting>
 </project>
