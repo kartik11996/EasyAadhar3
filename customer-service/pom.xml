@@ -8,7 +8,7 @@
 		<artifactId>EasyAadhar</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.stackroute</groupId>
+
 	<artifactId>customer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>customer-service</name>
@@ -53,6 +53,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
