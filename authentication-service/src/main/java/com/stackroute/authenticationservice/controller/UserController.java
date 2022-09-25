@@ -17,10 +17,11 @@ import com.stackroute.authenticationservice.service.UserService;
 
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    private RabbitTemplate template;
+//    @Autowired
+//    private RabbitTemplate template;
     @Autowired
     private UserService userService;
 
@@ -34,12 +35,15 @@ public class UserController {
     public ResponseEntity<?> registerNewUser(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
             User user=userService.registerNewUser(userName,userPassword);
-          template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,userName);
+       //   template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,userName);
             return new ResponseEntity<>(user ,HttpStatus.OK);
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);
-    	}
+    	}catch(Exception e){
+            return new ResponseEntity<>( "internal server error",HttpStatus.CONFLICT);
+
+        }
     }
 
     @PostMapping({"/registerNewOperator"})
@@ -51,17 +55,20 @@ public class UserController {
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);
-    	}
+    	}catch(Exception e){
+           return new ResponseEntity<>( "internal server error",HttpStatus.CONFLICT);
+
+        }
     }
     
     
     @GetMapping({"/operator"})
     @PreAuthorize("hasRole('Operator')")
-    public String forAdmin(){
+    public String forOperator(){
         return "welcome in Operator board";
     }
 
-    
+
     @GetMapping({"/user"})
     @PreAuthorize("hasRole('User')")
     public String forUser(){

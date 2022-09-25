@@ -38,14 +38,6 @@ public class UserService {
         userRole.setRoleDescription("Default role for newly created record");
         roleDao.save(userRole);
 
-        User adminUser = new User();
-        adminUser.setUserName("Ayaz1@gmail.com");
-        adminUser.setUserPassword(getEncodedPassword("Ayaz@pass"));
-        Set<Role> adminRoles = new HashSet<>();
-        adminRoles.add(adminRole);
-        adminUser.setRole(adminRoles);
-        userDao.save(adminUser);
-
  
     }
 

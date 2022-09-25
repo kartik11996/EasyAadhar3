@@ -28,20 +28,20 @@ import com.stackroute.slotbookingservice.service.BookingService;
 public class BookingController {
     @Autowired
     private BookingService bookingService;
+//
+//    @Autowired
+//    private RabbitTemplate template;
 
-    @Autowired
-    private RabbitTemplate template;
-
-    @RabbitListener(queues =  RabbitMqConfiguration.QUEUE2)
-    public void consumeLoanDetailsFromQueue(Customer customer) {
-        System.out.println("User details recieved from queue : " + customer);
-        //   service.save(userDetails);
-    }
+//    @RabbitListener(queues =  RabbitMqConfiguration.QUEUE2)
+//    public void consumeLoanDetailsFromQueue(Customer customer) {
+//        System.out.println("User details recieved from queue : " + customer);
+//        //   service.save(userDetails);
+//    }
     @PostMapping("/saveBooking")
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking) throws BookingAlreadyExist {
 
         try {
-            template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,booking);
+         //   template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,booking);
             return new ResponseEntity<>(bookingService.saveData(booking), HttpStatus.OK);
 
         } catch (BookingAlreadyExist e) {
