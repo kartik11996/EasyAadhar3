@@ -2,14 +2,14 @@ package com.stackroute.emailservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stackroute.emailservice.exception.emailNotSendException;
 import com.stackroute.emailservice.service.EmailService;
 
 @RestController
+@RequestMapping("/Mail")
+
 public class Emailcontroller {
 	@Autowired
 	  private EmailService service;

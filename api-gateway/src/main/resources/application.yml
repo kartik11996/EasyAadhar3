@@ -11,3 +11,35 @@ server:
 spring:
   application:
     name: "api-gateway"
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: customerservice
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/CustomerDetails/**
+        #- id : authenticationservice
+        - id: paymentservice
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/history/**
+        - id: operatorservice
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/aadharcenter/**
+        - id: authenticationservice
+          uri: http://localhost:8085/
+          predicates:
+           - Path=/Test/**
+
+        - id: slotbookingservice
+          uri: http://localhost:9090/
+          predicates:
+            - Path=/getOne/**
+
+        - id: emailservice
+          uri: http://localhost:9095/
+          predicates:
+            - Path=/Mail/**
