@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -45,5 +46,7 @@ public class AadharCenterRegister {
     private List<String> transportFacilities;
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date postedDate;
+    @OneToMany
+    private List<Appointment> slots;
 }
 

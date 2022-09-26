@@ -2,6 +2,7 @@ package com.stackroute.operatorservice.service;
 
 import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
+import com.stackroute.operatorservice.model.Appointment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public interface AadharCenterService {
     boolean deleteById(String id);
     List<AadharCenterRegister> getAllCenter();
     List<AadharCenterRegister> getCenterByLocationPin(long locationPin);
+    //Appointment create(String id, Appointment appointment);
 
 
 

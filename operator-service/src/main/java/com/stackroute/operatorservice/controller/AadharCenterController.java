@@ -3,6 +3,7 @@ package com.stackroute.operatorservice.controller;
 import com.google.gson.Gson;
 import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
+import com.stackroute.operatorservice.model.Appointment;
 import com.stackroute.operatorservice.service.AadharCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,8 +39,8 @@ public class AadharCenterController {
         Gson gson = new Gson();
         AadharCenterRegister aadharCenterObj = gson.fromJson(aadharcenter, AadharCenterRegister.class);
         Date date = new Date();
-      //  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-       // String str = formatter.format(date);
+        //SimpleDateFormat formatter = new SimpleDateFormat("HH/mm/ss");
+        //Time time = Time.valueOf(formatter.format(date));
         aadharCenterObj.setPostedDate(date);
 
         try{
@@ -148,6 +151,21 @@ public class AadharCenterController {
 
 
     }
+/*    @PostMapping("/{id}/createslots")
+    public ResponseEntity<?> createSlots(@PathVariable("id") String id, @RequestBody Appointment appointment){
+        try {
+            Appointment appointment1 = ACService.createAppointment(id, appointment);
+            return new ResponseEntity<Appointment>(appointment1, HttpStatus.CREATED);
+        }catch (BusinessException e) {
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
+        }catch (Exception e) {
+            //  ControllerException ce = new ControllerException();
+            return new ResponseEntity<>("Error Code: "+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
+        }*/
+
+   // }
+
+
 
 }
 

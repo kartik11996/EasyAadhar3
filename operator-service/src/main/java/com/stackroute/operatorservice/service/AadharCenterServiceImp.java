@@ -10,12 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class AadharCenterServiceImp implements AadharCenterService{
     private AadharCenterRepo ACRepo;
+    @Autowired
+   // private AppointmentSlotRepo ASrepo;
+
 
     public AadharCenterServiceImp(){
 
@@ -31,10 +33,8 @@ public class AadharCenterServiceImp implements AadharCenterService{
     public AadharCenterRegister create(AadharCenterRegister aadharcenter, MultipartFile file) throws IOException {
         if(aadharcenter.getCenterName().isEmpty() || aadharcenter.getCenterName().length() ==0)
             throw new BusinessException("601", "Please send proper center name, center Name is empty");
-            System.out.println("2");
 
         aadharcenter.setVisualsOfCenter(file.getBytes());
-        System.out.println(file.getBytes());
         AadharCenterRegister savedCenter = ACRepo.save(aadharcenter);
         return savedCenter;
     }
@@ -63,6 +63,7 @@ public class AadharCenterServiceImp implements AadharCenterService{
             acr.setPlacesNearBy(aadharcenter.getPlacesNearBy());
             acr.setState(aadharcenter.getState());
             acr.setTransportFacilities(aadharcenter.getTransportFacilities());
+            acr.setSlots(aadharcenter.getSlots());
         }
         else {
             throw new BusinessException("603","No center Exits with this id, Please choose another center ID");
@@ -104,6 +105,8 @@ public class AadharCenterServiceImp implements AadharCenterService{
         }
         return acr;
     }
+
+
     @Override
     public AadharCenterRegister getCenterById(String id) {
         Optional<AadharCenterRegister>acr = ACRepo.findById(id);
@@ -113,7 +116,6 @@ public class AadharCenterServiceImp implements AadharCenterService{
         else{
             throw new BusinessException("607", "given center id does not exist in Database.");
         }
-
     }
 
     @Override
@@ -124,5 +126,21 @@ public class AadharCenterServiceImp implements AadharCenterService{
             throw new BusinessException("608", "No center exits within the city");
         return acr;
     }
+
+/*    @Override
+    public Appointment createAppointment(String id, Appointment appointment) {
+        AadharCenterRegister acr = ACRepo.findById(id).get();
+        Optional<AadharCenterRegister>optional=ACRepo.findById(id);
+        List<Appointment>a;
+
+        if (optional.isPresent()){
+            List<Appointment>as= ASrepo.save(appointment));
+        }
+
+
+        return ASrepo.save(appointment);
+
+        // Appointment appointment = ASrepo.save(appointment);
+    }*/
 
 }
