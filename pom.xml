@@ -30,11 +30,22 @@
         <module>customer-service</module>
         <module>payment-service</module>
         <module>authentication-service</module>
+
         <module>email-service</module>
         <module>slot-booking-service</module>
     </modules>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -42,6 +53,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jacoco</groupId>
@@ -95,6 +108,9 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
         </dependency>
+         
+
+
 
 
     </dependencies>
@@ -183,11 +199,13 @@
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>3.1.9</version>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.6</version>
             </plugin>
+
         </plugins>
     </reporting>
 </project>

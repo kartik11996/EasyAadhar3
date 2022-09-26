@@ -14,19 +14,19 @@ import com.stackroute.customerservice.repository.*;
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
-	private CustomerRepo CR;
+	private CustomerRepository CR;
 	
 	public CustomerServiceImpl() {
 
 	}
 	
-	public CustomerServiceImpl(CustomerRepo customerRepo ){
-        this.CR=customerRepo;
+	public CustomerServiceImpl(CustomerRepository customerRepository){
+        this.CR= customerRepository;
     }
 	
 
 	@Override
-	public List<CustomerList> findAllCustomers() {
+	public List<CustomerList> getAllCustomers() {
 		return CR.findAll();
 	}
 

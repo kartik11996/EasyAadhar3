@@ -8,7 +8,7 @@
 		<artifactId>EasyAadhar</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.stackroute</groupId>
+
 	<artifactId>operator-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>operator-service</name>
@@ -45,6 +45,11 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 
+ <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    <version>3.1.4</version>
+ </dependency>
 
 	</dependencies>
 

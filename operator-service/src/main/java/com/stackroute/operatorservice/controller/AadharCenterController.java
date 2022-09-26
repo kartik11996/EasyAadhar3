@@ -58,7 +58,7 @@ public class AadharCenterController {
     }
 
     @GetMapping("/getallcenters")
-    public ResponseEntity<?>findAllCenter(){
+    public ResponseEntity<?> findAllCenter(){
         try {
             List<AadharCenterRegister>listOfAllCenters=ACService.getAllCenter();
             return new ResponseEntity<List<AadharCenterRegister>>(listOfAllCenters,HttpStatus.OK);
@@ -113,7 +113,7 @@ public class AadharCenterController {
     }
 
     @GetMapping("getcenterbycity/{city}")
-    public ResponseEntity<?>getCenterByCity(@PathVariable("city") String city){
+    public ResponseEntity<?> getCenterByCity(@PathVariable("city") String city){
         try {
             List<AadharCenterRegister>listOfCenterByCity = ACService.getCenterByCity(city);
             return new ResponseEntity<List<AadharCenterRegister>>(listOfCenterByCity,HttpStatus.OK);
@@ -138,7 +138,7 @@ public class AadharCenterController {
     }
 
     @GetMapping("/getcenterbylocationpin/{locationPin}")
-    public ResponseEntity<?>findByPinCode(@PathVariable long locationPin){
+    public ResponseEntity<?> findByPinCode(@PathVariable long locationPin){
         try {
             List<AadharCenterRegister> centerRetrieve = ACService.getCenterByLocationPin(locationPin);
             return new ResponseEntity<List<AadharCenterRegister>>(centerRetrieve,HttpStatus.OK);
