@@ -14,7 +14,7 @@ import com.stackroute.authenticationservice.service.JwtService;
 
 @RestController
 @CrossOrigin
-
+@RequestMapping("/auth/login")
 public class JwtController {
 
     @Autowired

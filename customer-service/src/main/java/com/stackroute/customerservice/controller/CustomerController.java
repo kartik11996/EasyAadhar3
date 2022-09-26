@@ -4,7 +4,10 @@ package com.stackroute.customerservice.controller;
 import java.util.List;
 //import java.util.Optional;
 
+import com.stackroute.customerservice.configuration.RabbitMqConfiguration;
 import com.stackroute.customerservice.exception.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -28,10 +31,19 @@ public class CustomerController {
 	
 	private CustomerService customerService;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {this.customerService = customerService;
-    }
+//    @Autowired
+//    private RabbitTemplate template;
 
+    @Autowired
+    public CustomerController(CustomerService customerService) {this.customerService = customerService;}
+
+
+    //receiving data from authentication service
+//    @RabbitListener(queues =  RabbitMqConfiguration.QUEUE)
+//    public void consumeLoanDetailsFromQueue(String email) {
+//        System.out.println("User details recieved from queue : " + email);
+//     //   service.save(userDetails);
+//    }
     @PostMapping("/addCustomer")
     public ResponseEntity<?> addCustomer(@RequestBody CustomerList customer) {
         try {
@@ -46,17 +58,26 @@ public class CustomerController {
                     || customer.getRelativeAadharNumber().isEmpty()) {
                 return new ResponseEntity<>("Please enter all the required fields", HttpStatus.BAD_REQUEST);
             }
+
+
+
+            // sending data to slot booking service
+
+         //   template.convertAndSend(RabbitMqConfiguration.EXCHANGE2,RabbitMqConfiguration.ROUTING_KEY2,customer);
+
             return new ResponseEntity<>(customerService.saveCustomer(customer), HttpStatus.CREATED);
 
         } catch (CustomerAlreadyExistsException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
         }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    
-    @GetMapping("/findAllCustomers")
+    @GetMapping("/getAllCustomers")
     List<CustomerList>getAllCustomers(){
-        return customerService.findAllCustomers();
+        return customerService.getAllCustomers();
     }
 
 
@@ -68,11 +89,15 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
         }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
     @PutMapping("/updateCustomer/{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerList customer) {
+    public ResponseEntity<?> updateCustomer(@PathVariable String id,
+                                            @RequestBody CustomerList customer) {
 //        System.out.println(id);
         try {
             if (customer.getName() == null
@@ -91,6 +116,9 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
         }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     
@@ -102,6 +130,9 @@ public class CustomerController {
 
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+        }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

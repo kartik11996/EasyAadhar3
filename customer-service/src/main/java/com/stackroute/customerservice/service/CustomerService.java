@@ -10,8 +10,7 @@ import com.stackroute.customerservice.exception.*;
 public interface CustomerService<CustomerList> {
 	
 	
-	List<CustomerList> findAllCustomers();
-	
+	List<CustomerList> getAllCustomers();
 
 	String saveCustomer(com.stackroute.customerservice.model.CustomerList customerDetails) throws CustomerAlreadyExistsException;
 
