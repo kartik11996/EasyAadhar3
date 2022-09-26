@@ -32,7 +32,11 @@ spring:
         - id: authenticationservice
           uri: http://localhost:8085/
           predicates:
-           - Path=/Test/**
+           - Path=/api/**
+        #- id: authenticationservice
+         # uri: http://localhost:8085/
+          #predicates:
+           # - Path=/api/**
 
         - id: slotbookingservice
           uri: http://localhost:9090/
