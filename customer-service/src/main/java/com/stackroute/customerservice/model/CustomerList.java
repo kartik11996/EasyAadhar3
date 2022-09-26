@@ -1,24 +1,23 @@
 package com.stackroute.customerservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import lombok.Data;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Document(collection = "CustomerDetails")
-//@EnableAutoConfiguration
+@EnableAutoConfiguration
 public class CustomerList {
 
+    @NonNull
 	private String name;
-	@Id 
+
+    @Id
     private String email;
 
     @NonNull
@@ -41,7 +40,7 @@ public class CustomerList {
 
     @NonNull
     private String typeOfRelation;
-
+//take enum
     @NonNull
     private String relativeAadharNumber;
 

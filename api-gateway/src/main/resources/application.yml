@@ -11,3 +11,14 @@ server:
 spring:
   application:
     name: "api-gateway"
+  main:
+    web-application-type: reactive
+    cloud:
+      gateway:
+        routes:
+          - id: customerservice
+            uri: http://localhost:8083
+            predicates:
+              - Path=/CustomerDetails/**
+
+

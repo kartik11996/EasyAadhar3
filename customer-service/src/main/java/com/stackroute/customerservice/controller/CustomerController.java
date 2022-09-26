@@ -35,8 +35,7 @@ public class CustomerController {
 //    private RabbitTemplate template;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {this.customerService = customerService;
-    }
+    public CustomerController(CustomerService customerService) {this.customerService = customerService;}
 
 
     //receiving data from authentication service
@@ -71,12 +70,14 @@ public class CustomerController {
         } catch (CustomerAlreadyExistsException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
         }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    
-    @GetMapping("/findAllCustomers")
+    @GetMapping("/getAllCustomers")
     List<CustomerList>getAllCustomers(){
-        return customerService.findAllCustomers();
+        return customerService.getAllCustomers();
     }
 
 
@@ -88,11 +89,15 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
         }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
     @PutMapping("/updateCustomer/{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerList customer) {
+    public ResponseEntity<?> updateCustomer(@PathVariable String id,
+                                            @RequestBody CustomerList customer) {
 //        System.out.println(id);
         try {
             if (customer.getName() == null
@@ -111,6 +116,9 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
         }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     
@@ -122,6 +130,9 @@ public class CustomerController {
 
         } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+        }
+        catch (Exception x){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
