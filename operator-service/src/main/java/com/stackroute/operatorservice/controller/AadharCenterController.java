@@ -151,7 +151,8 @@ public class AadharCenterController {
 
 
     }
-/*    @PostMapping("/{id}/createslots")
+
+   @PostMapping("/createslots/{id}")
     public ResponseEntity<?> createSlots(@PathVariable("id") String id, @RequestBody Appointment appointment){
         try {
             Appointment appointment1 = ACService.createAppointment(id, appointment);
@@ -161,9 +162,8 @@ public class AadharCenterController {
         }catch (Exception e) {
             //  ControllerException ce = new ControllerException();
             return new ResponseEntity<>("Error Code: "+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
-        }*/
-
-   // }
+        }
+   }
 
 
 

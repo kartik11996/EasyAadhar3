@@ -15,10 +15,16 @@ import static org.mockito.Mockito.when;
 
 import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
+import com.stackroute.operatorservice.model.Appointment;
+import com.stackroute.operatorservice.model.AppointmentStatus;
 import com.stackroute.operatorservice.repository.AadharCenterRepo;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -178,6 +184,7 @@ class AadharCenterServiceImpTest {
                 new MockMultipartFile("Name", new ByteArrayInputStream("AAAAAAAA".getBytes("UTF-8")))));
         verify(aadharCenterRepo, atLeast(1)).findById((String) any());
     }
+
     @Test
     void testDeleteById() {
         doNothing().when(aadharCenterRepo).deleteById((String) any());
@@ -303,6 +310,99 @@ class AadharCenterServiceImpTest {
                 .thenThrow(new BusinessException("An error occurred", "An error occurred"));
         assertThrows(BusinessException.class, () -> aadharCenterServiceImp.getCenterByCity("Oxford"));
         verify(aadharCenterRepo).findByCity((String) any());
+    }
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
+     */
+    @Test
+    @Disabled("TODO: Complete this test")
+    void testCreateAppointment() {
+        // TODO: Complete this test.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   java.lang.NullPointerException
+        //       at com.stackroute.operatorservice.service.AadharCenterServiceImp.createAppointment(AadharCenterServiceImp.java:138)
+        //   In order to prevent createAppointment(String, Appointment)
+        //   from throwing NullPointerException, add constructors or factory
+        //   methods that make it easier to construct fully initialized objects used in
+        //   createAppointment(String, Appointment).
+        //   See https://diff.blue/R013 to resolve this issue.
+
+        when(aadharCenterRepo.findById((String) any())).thenReturn(Optional.of(new AadharCenterRegister()));
+        aadharCenterServiceImp.createAppointment("42", new Appointment("42", "Appointment Start Time",
+                "Appointment End Time", AppointmentStatus.Available, "2020-03-01"));
+    }
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
+     */
+    @Test
+    void testCreateAppointment2() throws UnsupportedEncodingException {
+        when(aadharCenterRepo.save((AadharCenterRegister) any())).thenReturn(new AadharCenterRegister());
+        ArrayList<String> amenities = new ArrayList<>();
+        byte[] visualsOfCenter = "AAAAAAAA".getBytes("UTF-8");
+        ArrayList<String> placesNearBy = new ArrayList<>();
+        ArrayList<String> transportFacilities = new ArrayList<>();
+        LocalDateTime atStartOfDayResult = LocalDate.of(1970, 1, 1).atStartOfDay();
+        Date postedDate = Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant());
+        when(aadharCenterRepo.findById((String) any())).thenReturn(Optional.of(new AadharCenterRegister("42",
+                "Center Name", "Opening Time", "Closing Time", amenities, "42 Main St", "Oxford", "MD", 1L, visualsOfCenter,
+                "Center Description", "Contact Info", placesNearBy, transportFacilities, postedDate, new ArrayList<>())));
+        Appointment appointment = new Appointment("42", "Appointment Start Time", "Appointment End Time",
+                AppointmentStatus.Available, "2020-03-01");
+
+        assertSame(appointment, aadharCenterServiceImp.createAppointment("42", appointment));
+        verify(aadharCenterRepo).save((AadharCenterRegister) any());
+        verify(aadharCenterRepo, atLeast(1)).findById((String) any());
+    }
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
+     */
+    @Test
+    void testCreateAppointment3() {
+        AadharCenterRegister aadharCenterRegister = mock(AadharCenterRegister.class);
+        when(aadharCenterRegister.getSlots()).thenThrow(new BusinessException("An error occurred", "An error occurred"));
+        doThrow(new BusinessException("An error occurred", "An error occurred")).when(aadharCenterRegister)
+                .setSlots((List<Appointment>) any());
+        Optional<AadharCenterRegister> ofResult = Optional.of(aadharCenterRegister);
+        when(aadharCenterRepo.save((AadharCenterRegister) any())).thenReturn(new AadharCenterRegister());
+        when(aadharCenterRepo.findById((String) any())).thenReturn(ofResult);
+        assertThrows(BusinessException.class, () -> aadharCenterServiceImp.createAppointment("42", new Appointment("42",
+                "Appointment Start Time", "Appointment End Time", AppointmentStatus.Available, "2020-03-01")));
+        verify(aadharCenterRepo, atLeast(1)).findById((String) any());
+        verify(aadharCenterRegister).getSlots();
+    }
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
+     */
+    @Test
+    @Disabled("TODO: Complete this test")
+    void testCreateAppointment4() {
+        // TODO: Complete this test.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   java.util.NoSuchElementException: No value present
+        //       at java.util.Optional.get(Optional.java:148)
+        //       at com.stackroute.operatorservice.service.AadharCenterServiceImp.createAppointment(AadharCenterServiceImp.java:133)
+        //   In order to prevent createAppointment(String, Appointment)
+        //   from throwing NoSuchElementException, add constructors or factory
+        //   methods that make it easier to construct fully initialized objects used in
+        //   createAppointment(String, Appointment).
+        //   See https://diff.blue/R013 to resolve this issue.
+
+        when(aadharCenterRepo.save((AadharCenterRegister) any())).thenReturn(new AadharCenterRegister());
+        when(aadharCenterRepo.findById((String) any())).thenReturn(Optional.empty());
+        new BusinessException("An error occurred", "An error occurred");
+
+        new BusinessException("An error occurred", "An error occurred");
+
+        aadharCenterServiceImp.createAppointment("42", new Appointment("42", "Appointment Start Time",
+                "Appointment End Time", AppointmentStatus.Available, "2020-03-01"));
     }
 }
 

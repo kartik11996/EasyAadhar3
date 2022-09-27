@@ -2,6 +2,7 @@ package com.stackroute.operatorservice.service;
 
 import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
+import com.stackroute.operatorservice.model.Appointment;
 import com.stackroute.operatorservice.repository.AadharCenterRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,9 @@ import java.util.Optional;
 @Service
 public class AadharCenterServiceImp implements AadharCenterService{
     private AadharCenterRepo ACRepo;
-    @Autowired
-   // private AppointmentSlotRepo ASrepo;
-
+   /* @Autowired
+    private AppointmentSlotRepo ASrepo;
+*/
 
     public AadharCenterServiceImp(){
 
@@ -127,20 +128,24 @@ public class AadharCenterServiceImp implements AadharCenterService{
         return acr;
     }
 
-/*    @Override
+    @Override
     public Appointment createAppointment(String id, Appointment appointment) {
         AadharCenterRegister acr = ACRepo.findById(id).get();
         Optional<AadharCenterRegister>optional=ACRepo.findById(id);
-        List<Appointment>a;
 
         if (optional.isPresent()){
-            List<Appointment>as= ASrepo.save(appointment));
+            List<Appointment> a=acr.getSlots();
+            a.add(appointment);
+            acr.setSlots(a);
+            ACRepo.save(acr);
+            return appointment;
         }
 
 
-        return ASrepo.save(appointment);
+       // return ASrepo.save(appointment);
 
         // Appointment appointment = ASrepo.save(appointment);
-    }*/
+        return appointment;
+    }
 
 }
