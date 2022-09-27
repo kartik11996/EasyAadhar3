@@ -4,10 +4,7 @@ package com.stackroute.customerservice.controller;
 import java.util.List;
 //import java.util.Optional;
 
-import com.stackroute.customerservice.configuration.RabbitMqConfiguration;
 import com.stackroute.customerservice.exception.*;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -45,7 +42,7 @@ public class CustomerController {
 //     //   service.save(userDetails);
 //    }
     @PostMapping("/addCustomer")
-    public ResponseEntity<?> addCustomer(@RequestBody CustomerList customer) {
+    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         try {
             if (customer.getName() == null
                     || customer.getEmail() == null
@@ -76,7 +73,7 @@ public class CustomerController {
     }
 
     @GetMapping("/getAllCustomers")
-    List<CustomerList>getAllCustomers(){
+    List<Customer>getAllCustomers(){
         return customerService.getAllCustomers();
     }
 
@@ -97,7 +94,7 @@ public class CustomerController {
 
     @PutMapping("/updateCustomer/{id}")
     public ResponseEntity<?> updateCustomer(@PathVariable String id,
-                                            @RequestBody CustomerList customer) {
+                                            @RequestBody Customer customer) {
 //        System.out.println(id);
         try {
             if (customer.getName() == null

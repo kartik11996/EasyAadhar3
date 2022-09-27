@@ -26,13 +26,13 @@ public class CustomerServiceImpl implements CustomerService {
 	
 
 	@Override
-	public List<CustomerList> getAllCustomers() {
+	public List<Customer> getAllCustomers() {
 		return CR.findAll();
 	}
 
 
 	@Override
-	public String saveCustomer(CustomerList customerDetails) throws CustomerAlreadyExistsException {
+	public String saveCustomer(Customer customerDetails) throws CustomerAlreadyExistsException {
 		 CR.save(customerDetails);
 		 System.out.println("from service method " + customerDetails);
 		 return "Customer has been added successfully";
@@ -40,9 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
 			
 	
 	@Override
-	public String updateCustomerById(String id, CustomerList customerDetails) throws CustomerNotFoundException {
-		Optional<CustomerList> findById = CR.findById(id);
-		CustomerList customer = findById.get();
+	public String updateCustomerById(String id, Customer customerDetails) throws CustomerNotFoundException {
+		Optional<Customer> findById = CR.findById(id);
+		Customer customer = findById.get();
 //		CustomerList customer = new CustomerList();
 		if (findById.isPresent()){
 			customer.setName(customerDetails.getName());
@@ -63,18 +63,18 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	
 	@Override
-	public CustomerList getCustomerById(String id) throws CustomerNotFoundException {
+	public Customer getCustomerById(String id) throws CustomerNotFoundException {
 		
 //		return CR.findById(id);
-		Optional<CustomerList> findById = CR.findById(id);
-		CustomerList customer = findById.get();
+		Optional<Customer> findById = CR.findById(id);
+		Customer customer = findById.get();
 		System.out.println(customer);
 		return customer;
 		
 	}
 	
 	@Override
-	public List<CustomerList> getCustomerByMobile(String mobile) throws CustomerNotFoundException {
+	public List<Customer> getCustomerByMobile(String mobile) throws CustomerNotFoundException {
 		return CR.findByMobile(mobile);
 	}
 

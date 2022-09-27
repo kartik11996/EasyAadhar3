@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 
 import com.stackroute.customerservice.exception.CustomerAlreadyExistsException;
 import com.stackroute.customerservice.exception.CustomerNotFoundException;
-import com.stackroute.customerservice.model.CustomerList;
+import com.stackroute.customerservice.model.Customer;
 import com.stackroute.customerservice.repository.CustomerRepository;
 
 import java.util.ArrayList;
@@ -40,97 +40,97 @@ class CustomerServiceImplTest {
      */
     @Test
     void testGetAllCustomers() {
-        ArrayList<CustomerList> customerListList = new ArrayList<>();
-        when(customerRepository.findAll()).thenReturn(customerListList);
-        List<CustomerList> actualAllCustomers = customerServiceImpl.getAllCustomers();
-        assertSame(customerListList, actualAllCustomers);
+        ArrayList<Customer> customerList = new ArrayList<>();
+        when(customerRepository.findAll()).thenReturn(customerList);
+        List<Customer> actualAllCustomers = customerServiceImpl.getAllCustomers();
+        assertSame(customerList, actualAllCustomers);
         assertTrue(actualAllCustomers.isEmpty());
         verify(customerRepository).findAll();
     }
 
     /**
-     * Method under test: {@link CustomerServiceImpl#saveCustomer(CustomerList)}
+     * Method under test: {@link CustomerServiceImpl#saveCustomer(Customer)}
      */
     @Test
     void testSaveCustomer() throws CustomerAlreadyExistsException {
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        when(customerRepository.save((CustomerList) any())).thenReturn(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        when(customerRepository.save((Customer) any())).thenReturn(customer);
 
-        CustomerList customerList1 = new CustomerList();
-        customerList1.setAddress("42 Main St");
-        customerList1.setDOB("D OB");
-        customerList1.setEmail("jane.doe@example.org");
-        customerList1.setGender("Gender");
-        customerList1.setMobile("Mobile");
-        customerList1.setName("Name");
-        customerList1.setNationality("Nationality");
-        customerList1.setParentName("Parent Name");
-        customerList1.setRelativeAadharNumber("42");
-        customerList1.setTypeOfRelation("Type Of Relation");
-        assertEquals("Customer has been added successfully", customerServiceImpl.saveCustomer(customerList1));
-        verify(customerRepository).save((CustomerList) any());
+        Customer customer1 = new Customer();
+        customer1.setAddress("42 Main St");
+        customer1.setDOB("D OB");
+        customer1.setEmail("jane.doe@example.org");
+        customer1.setGender("Gender");
+        customer1.setMobile("Mobile");
+        customer1.setName("Name");
+        customer1.setNationality("Nationality");
+        customer1.setParentName("Parent Name");
+        customer1.setRelativeAadharNumber("42");
+        customer1.setTypeOfRelation("Type Of Relation");
+        assertEquals("Customer has been added successfully", customerServiceImpl.saveCustomer(customer1));
+        verify(customerRepository).save((Customer) any());
     }
 
     /**
-     * Method under test: {@link CustomerServiceImpl#updateCustomerById(String, CustomerList)}
+     * Method under test: {@link CustomerServiceImpl#updateCustomerById(String, Customer)}
      */
     @Test
     void testUpdateCustomerById() throws CustomerNotFoundException {
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        Optional<CustomerList> ofResult = Optional.of(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        Optional<Customer> ofResult = Optional.of(customer);
 
-        CustomerList customerList1 = new CustomerList();
-        customerList1.setAddress("42 Main St");
-        customerList1.setDOB("D OB");
-        customerList1.setEmail("jane.doe@example.org");
-        customerList1.setGender("Gender");
-        customerList1.setMobile("Mobile");
-        customerList1.setName("Name");
-        customerList1.setNationality("Nationality");
-        customerList1.setParentName("Parent Name");
-        customerList1.setRelativeAadharNumber("42");
-        customerList1.setTypeOfRelation("Type Of Relation");
-        when(customerRepository.save((CustomerList) any())).thenReturn(customerList1);
+        Customer customer1 = new Customer();
+        customer1.setAddress("42 Main St");
+        customer1.setDOB("D OB");
+        customer1.setEmail("jane.doe@example.org");
+        customer1.setGender("Gender");
+        customer1.setMobile("Mobile");
+        customer1.setName("Name");
+        customer1.setNationality("Nationality");
+        customer1.setParentName("Parent Name");
+        customer1.setRelativeAadharNumber("42");
+        customer1.setTypeOfRelation("Type Of Relation");
+        when(customerRepository.save((Customer) any())).thenReturn(customer1);
         when(customerRepository.findById((String) any())).thenReturn(ofResult);
 
-        CustomerList customerList2 = new CustomerList();
-        customerList2.setAddress("42 Main St");
-        customerList2.setDOB("D OB");
-        customerList2.setEmail("jane.doe@example.org");
-        customerList2.setGender("Gender");
-        customerList2.setMobile("Mobile");
-        customerList2.setName("Name");
-        customerList2.setNationality("Nationality");
-        customerList2.setParentName("Parent Name");
-        customerList2.setRelativeAadharNumber("42");
-        customerList2.setTypeOfRelation("Type Of Relation");
-        assertEquals("Customer Details are updated", customerServiceImpl.updateCustomerById("42", customerList2));
-        verify(customerRepository).save((CustomerList) any());
+        Customer customer2 = new Customer();
+        customer2.setAddress("42 Main St");
+        customer2.setDOB("D OB");
+        customer2.setEmail("jane.doe@example.org");
+        customer2.setGender("Gender");
+        customer2.setMobile("Mobile");
+        customer2.setName("Name");
+        customer2.setNationality("Nationality");
+        customer2.setParentName("Parent Name");
+        customer2.setRelativeAadharNumber("42");
+        customer2.setTypeOfRelation("Type Of Relation");
+        assertEquals("Customer Details are updated", customerServiceImpl.updateCustomerById("42", customer2));
+        verify(customerRepository).save((Customer) any());
         verify(customerRepository).findById((String) any());
     }
 
     /**
-     * Method under test: {@link CustomerServiceImpl#updateCustomerById(String, CustomerList)}
+     * Method under test: {@link CustomerServiceImpl#updateCustomerById(String, Customer)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -148,32 +148,32 @@ class CustomerServiceImplTest {
         //   updateCustomerById(String, CustomerList).
         //   See https://diff.blue/R013 to resolve this issue.
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        when(customerRepository.save((CustomerList) any())).thenReturn(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        when(customerRepository.save((Customer) any())).thenReturn(customer);
         when(customerRepository.findById((String) any())).thenReturn(Optional.empty());
 
-        CustomerList customerList1 = new CustomerList();
-        customerList1.setAddress("42 Main St");
-        customerList1.setDOB("D OB");
-        customerList1.setEmail("jane.doe@example.org");
-        customerList1.setGender("Gender");
-        customerList1.setMobile("Mobile");
-        customerList1.setName("Name");
-        customerList1.setNationality("Nationality");
-        customerList1.setParentName("Parent Name");
-        customerList1.setRelativeAadharNumber("42");
-        customerList1.setTypeOfRelation("Type Of Relation");
-        customerServiceImpl.updateCustomerById("42", customerList1);
+        Customer customer1 = new Customer();
+        customer1.setAddress("42 Main St");
+        customer1.setDOB("D OB");
+        customer1.setEmail("jane.doe@example.org");
+        customer1.setGender("Gender");
+        customer1.setMobile("Mobile");
+        customer1.setName("Name");
+        customer1.setNationality("Nationality");
+        customer1.setParentName("Parent Name");
+        customer1.setRelativeAadharNumber("42");
+        customer1.setTypeOfRelation("Type Of Relation");
+        customerServiceImpl.updateCustomerById("42", customer1);
     }
 
     /**
@@ -181,20 +181,20 @@ class CustomerServiceImplTest {
      */
     @Test
     void testGetCustomerById() throws CustomerNotFoundException {
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        Optional<CustomerList> ofResult = Optional.of(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        Optional<Customer> ofResult = Optional.of(customer);
         when(customerRepository.findById((String) any())).thenReturn(ofResult);
-        assertSame(customerList, customerServiceImpl.getCustomerById("42"));
+        assertSame(customer, customerServiceImpl.getCustomerById("42"));
         verify(customerRepository).findById((String) any());
     }
 
@@ -226,10 +226,10 @@ class CustomerServiceImplTest {
      */
     @Test
     void testGetCustomerByMobile() throws CustomerNotFoundException {
-        ArrayList<CustomerList> customerListList = new ArrayList<>();
-        when(customerRepository.findByMobile((String) any())).thenReturn(customerListList);
-        List<CustomerList> actualCustomerByMobile = customerServiceImpl.getCustomerByMobile("Mobile");
-        assertSame(customerListList, actualCustomerByMobile);
+        ArrayList<Customer> customerList = new ArrayList<>();
+        when(customerRepository.findByMobile((String) any())).thenReturn(customerList);
+        List<Customer> actualCustomerByMobile = customerServiceImpl.getCustomerByMobile("Mobile");
+        assertSame(customerList, actualCustomerByMobile);
         assertTrue(actualCustomerByMobile.isEmpty());
         verify(customerRepository).findByMobile((String) any());
     }

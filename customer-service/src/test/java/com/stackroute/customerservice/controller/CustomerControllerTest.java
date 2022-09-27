@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import com.stackroute.customerservice.exception.CustomerAlreadyExistsException;
 import com.stackroute.customerservice.exception.CustomerNotFoundException;
-import com.stackroute.customerservice.model.CustomerList;
+import com.stackroute.customerservice.model.Customer;
 import com.stackroute.customerservice.repository.CustomerRepository;
 import com.stackroute.customerservice.service.CustomerService;
 import com.stackroute.customerservice.service.CustomerServiceImpl;
@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,18 +31,18 @@ class CustomerControllerTest {
     void testAddCustomer() {
         CustomerController customerController = new CustomerController(new CustomerServiceImpl());
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customer);
         assertNull(actualAddCustomerResult.getBody());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actualAddCustomerResult.getStatusCode());
         assertTrue(actualAddCustomerResult.getHeaders().isEmpty());
@@ -55,18 +54,18 @@ class CustomerControllerTest {
 
         CustomerController customerController = new CustomerController(null);
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customer);
         assertNull(actualAddCustomerResult.getBody());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actualAddCustomerResult.getStatusCode());
         assertTrue(actualAddCustomerResult.getHeaders().isEmpty());
@@ -76,37 +75,37 @@ class CustomerControllerTest {
     @Test
     void testAddCustomer3() {
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
         CustomerRepository customerRepository = mock(CustomerRepository.class);
-        when(customerRepository.save((CustomerList) any())).thenReturn(customerList);
+        when(customerRepository.save((Customer) any())).thenReturn(customer);
         CustomerController customerController = new CustomerController(new CustomerServiceImpl(customerRepository));
 
-        CustomerList customerList1 = new CustomerList();
-        customerList1.setAddress("42 Main St");
-        customerList1.setDOB("D OB");
-        customerList1.setEmail("jane.doe@example.org");
-        customerList1.setGender("Gender");
-        customerList1.setMobile("Mobile");
-        customerList1.setName("Name");
-        customerList1.setNationality("Nationality");
-        customerList1.setParentName("Parent Name");
-        customerList1.setRelativeAadharNumber("42");
-        customerList1.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customerList1);
+        Customer customer1 = new Customer();
+        customer1.setAddress("42 Main St");
+        customer1.setDOB("D OB");
+        customer1.setEmail("jane.doe@example.org");
+        customer1.setGender("Gender");
+        customer1.setMobile("Mobile");
+        customer1.setName("Name");
+        customer1.setNationality("Nationality");
+        customer1.setParentName("Parent Name");
+        customer1.setRelativeAadharNumber("42");
+        customer1.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customer1);
         assertEquals("Customer has been added successfully", actualAddCustomerResult.getBody());
         assertEquals(HttpStatus.CREATED, actualAddCustomerResult.getStatusCode());
         assertTrue(actualAddCustomerResult.getHeaders().isEmpty());
-        verify(customerRepository).save((CustomerList) any());
+        verify(customerRepository).save((Customer) any());
     }
 
 
@@ -114,26 +113,26 @@ class CustomerControllerTest {
     void testAddCustomer4() throws CustomerAlreadyExistsException {
 
         CustomerService customerService = mock(CustomerService.class);
-        when(customerService.saveCustomer((CustomerList) any()))
+        when(customerService.saveCustomer((Customer) any()))
                 .thenThrow(new CustomerAlreadyExistsException("An error occurred"));
         CustomerController customerController = new CustomerController(customerService);
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualAddCustomerResult = customerController.addCustomer(customer);
         assertEquals("An error occurred", actualAddCustomerResult.getBody());
         assertEquals(HttpStatus.CONFLICT, actualAddCustomerResult.getStatusCode());
         assertTrue(actualAddCustomerResult.getHeaders().isEmpty());
-        verify(customerService).saveCustomer((CustomerList) any());
+        verify(customerService).saveCustomer((Customer) any());
     }
 
 
@@ -143,11 +142,11 @@ class CustomerControllerTest {
     void testGetAllCustomers() {
 
         CustomerRepository customerRepository = mock(CustomerRepository.class);
-        ArrayList<CustomerList> customerListList = new ArrayList<>();
-        when(customerRepository.findAll()).thenReturn(customerListList);
-        List<CustomerList> actualAllCustomers = (new CustomerController(new CustomerServiceImpl(customerRepository)))
+        ArrayList<Customer> customerList = new ArrayList<>();
+        when(customerRepository.findAll()).thenReturn(customerList);
+        List<Customer> actualAllCustomers = (new CustomerController(new CustomerServiceImpl(customerRepository)))
                 .getAllCustomers();
-        assertSame(customerListList, actualAllCustomers);
+        assertSame(customerList, actualAllCustomers);
         assertTrue(actualAllCustomers.isEmpty());
         verify(customerRepository).findAll();
     }
@@ -166,19 +165,19 @@ class CustomerControllerTest {
     @Test
     void testGetCustomerById2() {
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
         CustomerRepository customerRepository = mock(CustomerRepository.class);
-        when(customerRepository.findById((String) any())).thenReturn(Optional.of(customerList));
+        when(customerRepository.findById((String) any())).thenReturn(Optional.of(customer));
         ResponseEntity<?> actualCustomerById = (new CustomerController(new CustomerServiceImpl(customerRepository)))
                 .getCustomerById("42");
         assertTrue(actualCustomerById.hasBody());
@@ -217,18 +216,18 @@ class CustomerControllerTest {
 
         CustomerController customerController = new CustomerController(new CustomerServiceImpl());
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customer);
         assertNull(actualUpdateCustomerResult.getBody());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actualUpdateCustomerResult.getStatusCode());
         assertTrue(actualUpdateCustomerResult.getHeaders().isEmpty());
@@ -240,18 +239,18 @@ class CustomerControllerTest {
 
         CustomerController customerController = new CustomerController(null);
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customer);
         assertNull(actualUpdateCustomerResult.getBody());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actualUpdateCustomerResult.getStatusCode());
         assertTrue(actualUpdateCustomerResult.getHeaders().isEmpty());
@@ -261,51 +260,51 @@ class CustomerControllerTest {
     @Test
     void testUpdateCustomer3() {
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        Optional<CustomerList> ofResult = Optional.of(customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        Optional<Customer> ofResult = Optional.of(customer);
 
-        CustomerList customerList1 = new CustomerList();
-        customerList1.setAddress("42 Main St");
-        customerList1.setDOB("D OB");
-        customerList1.setEmail("jane.doe@example.org");
-        customerList1.setGender("Gender");
-        customerList1.setMobile("Mobile");
-        customerList1.setName("Name");
-        customerList1.setNationality("Nationality");
-        customerList1.setParentName("Parent Name");
-        customerList1.setRelativeAadharNumber("42");
-        customerList1.setTypeOfRelation("Type Of Relation");
+        Customer customer1 = new Customer();
+        customer1.setAddress("42 Main St");
+        customer1.setDOB("D OB");
+        customer1.setEmail("jane.doe@example.org");
+        customer1.setGender("Gender");
+        customer1.setMobile("Mobile");
+        customer1.setName("Name");
+        customer1.setNationality("Nationality");
+        customer1.setParentName("Parent Name");
+        customer1.setRelativeAadharNumber("42");
+        customer1.setTypeOfRelation("Type Of Relation");
         CustomerRepository customerRepository = mock(CustomerRepository.class);
-        when(customerRepository.save((CustomerList) any())).thenReturn(customerList1);
+        when(customerRepository.save((Customer) any())).thenReturn(customer1);
         when(customerRepository.findById((String) any())).thenReturn(ofResult);
         CustomerController customerController = new CustomerController(new CustomerServiceImpl(customerRepository));
 
-        CustomerList customerList2 = new CustomerList();
-        customerList2.setAddress("42 Main St");
-        customerList2.setDOB("D OB");
-        customerList2.setEmail("jane.doe@example.org");
-        customerList2.setGender("Gender");
-        customerList2.setMobile("Mobile");
-        customerList2.setName("Name");
-        customerList2.setNationality("Nationality");
-        customerList2.setParentName("Parent Name");
-        customerList2.setRelativeAadharNumber("42");
-        customerList2.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customerList2);
+        Customer customer2 = new Customer();
+        customer2.setAddress("42 Main St");
+        customer2.setDOB("D OB");
+        customer2.setEmail("jane.doe@example.org");
+        customer2.setGender("Gender");
+        customer2.setMobile("Mobile");
+        customer2.setName("Name");
+        customer2.setNationality("Nationality");
+        customer2.setParentName("Parent Name");
+        customer2.setRelativeAadharNumber("42");
+        customer2.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customer2);
         assertEquals("Customer Details are updated", actualUpdateCustomerResult.getBody());
         assertEquals(HttpStatus.CREATED, actualUpdateCustomerResult.getStatusCode());
         assertTrue(actualUpdateCustomerResult.getHeaders().isEmpty());
-        verify(customerRepository).save((CustomerList) any());
+        verify(customerRepository).save((Customer) any());
         verify(customerRepository).findById((String) any());
     }
 
@@ -314,26 +313,26 @@ class CustomerControllerTest {
     void testUpdateCustomer4() throws CustomerNotFoundException {
 
         CustomerService customerService = mock(CustomerService.class);
-        when(customerService.updateCustomerById((String) any(), (CustomerList) any()))
+        when(customerService.updateCustomerById((String) any(), (Customer) any()))
                 .thenThrow(new CustomerNotFoundException("An error occurred"));
         CustomerController customerController = new CustomerController(customerService);
 
-        CustomerList customerList = new CustomerList();
-        customerList.setAddress("42 Main St");
-        customerList.setDOB("D OB");
-        customerList.setEmail("jane.doe@example.org");
-        customerList.setGender("Gender");
-        customerList.setMobile("Mobile");
-        customerList.setName("Name");
-        customerList.setNationality("Nationality");
-        customerList.setParentName("Parent Name");
-        customerList.setRelativeAadharNumber("42");
-        customerList.setTypeOfRelation("Type Of Relation");
-        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customerList);
+        Customer customer = new Customer();
+        customer.setAddress("42 Main St");
+        customer.setDOB("D OB");
+        customer.setEmail("jane.doe@example.org");
+        customer.setGender("Gender");
+        customer.setMobile("Mobile");
+        customer.setName("Name");
+        customer.setNationality("Nationality");
+        customer.setParentName("Parent Name");
+        customer.setRelativeAadharNumber("42");
+        customer.setTypeOfRelation("Type Of Relation");
+        ResponseEntity<?> actualUpdateCustomerResult = customerController.updateCustomer("42", customer);
         assertEquals("An error occurred", actualUpdateCustomerResult.getBody());
         assertEquals(HttpStatus.CONFLICT, actualUpdateCustomerResult.getStatusCode());
         assertTrue(actualUpdateCustomerResult.getHeaders().isEmpty());
-        verify(customerService).updateCustomerById((String) any(), (CustomerList) any());
+        verify(customerService).updateCustomerById((String) any(), (Customer) any());
     }
 
 

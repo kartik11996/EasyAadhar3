@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.stackroute.customerservice.model.*;
 
 @Repository
-public interface CustomerRepository extends MongoRepository<CustomerList,String>
+public interface CustomerRepository extends MongoRepository<Customer,String>
 {
-	List<CustomerList> findByMobile(String mobile);
+	List<Customer> findByMobile(String mobile);
 
 //	List<CustomerList> findByAddress(String address);
 

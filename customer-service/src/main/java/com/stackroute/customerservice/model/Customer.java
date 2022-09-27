@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Document(collection = "CustomerDetails")
 @EnableAutoConfiguration
-public class CustomerList {
+public class Customer {
 
     @NonNull
 	private String name;
