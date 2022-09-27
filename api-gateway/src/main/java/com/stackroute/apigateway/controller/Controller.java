@@ -1,5 +1,6 @@
 package com.stackroute.apigateway.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ public class Controller {
     public String getMessage() {
         return "Hai, from gateway";
     }
+
 
     @GetMapping("info")
     public String getInfo() {
