@@ -1,7 +1,10 @@
 package com.stackroute.emailservice.exception;
 
 public class emailNotSendException extends Exception{
-
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	String message;
