@@ -67,11 +67,7 @@ public class AadharCenterController {
         }catch (Exception e) {
             return new ResponseEntity<>("Error Code: 612"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
-
     }
-
-
-
     @PutMapping("/updateaadharcenter/{id}")
     public ResponseEntity<?> update(@PathVariable("id") String centerId, @RequestParam("AadharCenterDetails") String aadharcenter, @RequestParam("file") MultipartFile file) throws IOException {
         Gson gson = new Gson();
@@ -98,8 +94,6 @@ public class AadharCenterController {
             return new ResponseEntity<>("Error Code: 613"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
     }
-
-
     @DeleteMapping("/deleteaadharcenter/{id}")
     public ResponseEntity<?> deleteCenterById(@PathVariable("id") String id){
         try {
@@ -111,7 +105,6 @@ public class AadharCenterController {
             return new ResponseEntity<>("Error Code: 614"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
     }
-
     @GetMapping("getcenterbycity/{city}")
     public ResponseEntity<?> getCenterByCity(@PathVariable("city") String city){
         try {
@@ -148,8 +141,6 @@ public class AadharCenterController {
           //  ControllerException ce = new ControllerException();
             return new ResponseEntity<>("Error Code: 617"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
    @PostMapping("/createslots/{id}")
@@ -164,8 +155,28 @@ public class AadharCenterController {
             return new ResponseEntity<>("Error Code: "+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
         }
    }
-
-
-
+    @DeleteMapping("/deleteallslots/{id}")
+    public ResponseEntity<?> deleteSlots(@PathVariable("id") String id){
+        try {
+            ACService.deleteAppointment(id);
+            return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+        }catch (BusinessException e) {
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
+        }catch (Exception e) {
+            //  ControllerException ce = new ControllerException();
+            return new ResponseEntity<>("Error Code: "+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/getallslots/{id}")
+    public ResponseEntity<?> findAllslots(@PathVariable("id") String id){
+        try {
+            List<Appointment>listOfAllslots=ACService.getAllSlots(id);
+            return new ResponseEntity<List<Appointment>>(listOfAllslots,HttpStatus.OK);
+        }catch (BusinessException e) {
+            return new ResponseEntity<>("Error Code: "+e.getErrorCode()+"\nError Message:"+e.getErrorMessage(), HttpStatus.CONFLICT);
+        }catch (Exception e) {
+            return new ResponseEntity<>("Error Code: 612"+"\nError Message: Something went wrong in controller", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
 

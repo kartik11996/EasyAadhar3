@@ -17,6 +17,9 @@ public interface AadharCenterService {
     List<AadharCenterRegister> getAllCenter();
     List<AadharCenterRegister> getCenterByLocationPin(long locationPin);
     Appointment createAppointment(String id, Appointment appointment);
+    boolean deleteAppointment(String id);
+    List<Appointment> getAllSlots(String id);
+
 
 
 

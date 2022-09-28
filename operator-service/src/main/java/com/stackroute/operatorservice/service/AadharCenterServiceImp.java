@@ -140,12 +140,33 @@ public class AadharCenterServiceImp implements AadharCenterService{
             ACRepo.save(acr);
             return appointment;
         }
+        else{
+            throw new BusinessException("609","No center Exits with this id, Please choose another center");
+        }
 
-
-       // return ASrepo.save(appointment);
-
-        // Appointment appointment = ASrepo.save(appointment);
-        return appointment;
     }
 
+    @Override
+    public boolean deleteAppointment(String id) {
+        AadharCenterRegister acr = ACRepo.findById(id).get();
+        Optional<AadharCenterRegister>optional=ACRepo.findById(id);
+
+        if (optional.isPresent()){
+            List<Appointment> a=acr.getSlots();
+            a.clear();
+            ACRepo.save(acr);
+            return true;
+        }else{
+            throw new BusinessException("610","No center Exits with this id, Please choose another center");
+        }
+    }
+    @Override
+    public List<Appointment> getAllSlots(String id) {
+        List<Appointment>acr = null;
+        acr=ACRepo.findById(id).get().getSlots();
+        if(acr.isEmpty())
+            throw new BusinessException("611","No slots available for this center");
+        else
+            return acr;
+    }
 }
