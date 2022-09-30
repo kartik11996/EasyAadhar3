@@ -15,8 +15,13 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepo bookingRepo;
+
+
+
+
     @Override
     public Booking saveData(Booking booking) throws BookingAlreadyExist {
+        bookingRepo.save(booking);
        if (bookingRepo.findById(booking.getAppointmentId()).isPresent()){
            throw new BookingAlreadyExist("Booking is already exist");
        }else

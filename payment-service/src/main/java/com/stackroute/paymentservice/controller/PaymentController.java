@@ -3,10 +3,15 @@ package com.stackroute.paymentservice.controller;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import com.stackroute.paymentservice.config.RabbitMqConfiguration;
+import com.stackroute.paymentservice.dto.BookingDto;
 import  org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -31,6 +36,20 @@ public class PaymentController {
 
 	@Autowired
 	private PaymentRepository paymentrepository;
+
+	@Autowired
+	private RabbitTemplate template;
+
+	 BookingDto bookingDto=new BookingDto();
+
+	 //receiving data from slot booking service
+	@RabbitListener(queues = RabbitMqConfiguration.QUEUE)
+	public void saveOperator(BookingDto booking) {
+
+		 bookingDto=booking;
+
+	}
+
 
 	@RequestMapping("/history")
 //	@GetMapping("/")
@@ -84,7 +103,18 @@ public class PaymentController {
 	        System.out.println("RESULTS : "+parameters.toString());
 	        JSONObject json = new JSONObject(parameters);
 	        System.out.println(json);
+
+
+
+		 template.convertAndSend(RabbitMqConfiguration.EXCHANGE1,RabbitMqConfiguration.ROUTING_KEY1,bookingDto);
+
 	       Reciept Hist = new Reciept ();
+
+		   Hist.setCustomername(bookingDto.getCustomername());
+		   Hist.setEmailId(bookingDto.getEmailId());
+		   Hist.setMobile(bookingDto.getMobile());
+
+
 	      Hist.setORDERID(parameters.get("ORDERID"));
 	      Hist.setBANKNAME(parameters.get("BANKNAME"));
 	      Hist.setGATEWAYNAME(parameters.get("GATEWAYNAME"));
@@ -98,8 +128,8 @@ public class PaymentController {
 	      Hist.setTXNDATE(parameters.get("TXNDATE"));
 	      Hist.setBANKTXNID(parameters.get("BANKTXNID"));
 	      this.paymentrepository.save(Hist);
-	       
-	       
+
+
 	       
 	  // Exception Handling
 	       

@@ -14,7 +14,7 @@ import org.springframework.data.annotation.Id;
 public class Appointment {
 
     @Id
-    private String appointmentId;
+    private int appointmentId;
     @JsonFormat(pattern = "HH:mm:ss")
     private String appointmentStartTime;
     @JsonFormat(pattern = "HH:mm:ss")
