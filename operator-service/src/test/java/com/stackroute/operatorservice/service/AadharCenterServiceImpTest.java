@@ -312,32 +312,6 @@ class AadharCenterServiceImpTest {
         verify(aadharCenterRepo).findByCity((String) any());
     }
 
-    /**
-     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testCreateAppointment() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException
-        //       at com.stackroute.operatorservice.service.AadharCenterServiceImp.createAppointment(AadharCenterServiceImp.java:138)
-        //   In order to prevent createAppointment(String, Appointment)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   createAppointment(String, Appointment).
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        when(aadharCenterRepo.findById((String) any())).thenReturn(Optional.of(new AadharCenterRegister()));
-        aadharCenterServiceImp.createAppointment("42", new Appointment("42", "Appointment Start Time",
-                "Appointment End Time", AppointmentStatus.Available, "2020-03-01"));
-    }
-
-    /**
-     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
-     */
     @Test
     void testCreateAppointment2() throws UnsupportedEncodingException {
         when(aadharCenterRepo.save((AadharCenterRegister) any())).thenReturn(new AadharCenterRegister());
@@ -358,9 +332,6 @@ class AadharCenterServiceImpTest {
         verify(aadharCenterRepo, atLeast(1)).findById((String) any());
     }
 
-    /**
-     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
-     */
     @Test
     void testCreateAppointment3() {
         AadharCenterRegister aadharCenterRegister = mock(AadharCenterRegister.class);
@@ -376,33 +347,67 @@ class AadharCenterServiceImpTest {
         verify(aadharCenterRegister).getSlots();
     }
 
+
+
     /**
-     * Method under test: {@link AadharCenterServiceImp#createAppointment(String, Appointment)}
+     * Method under test: {@link AadharCenterServiceImp#deleteAppointment(String)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
-    void testCreateAppointment4() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:148)
-        //       at com.stackroute.operatorservice.service.AadharCenterServiceImp.createAppointment(AadharCenterServiceImp.java:133)
-        //   In order to prevent createAppointment(String, Appointment)
-        //   from throwing NoSuchElementException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   createAppointment(String, Appointment).
-        //   See https://diff.blue/R013 to resolve this issue.
-
+    void testDeleteAppointment2() {
+        AadharCenterRegister aadharCenterRegister = new AadharCenterRegister();
+        aadharCenterRegister.setSlots(new ArrayList<>());
+        Optional<AadharCenterRegister> ofResult = Optional.of(aadharCenterRegister);
         when(aadharCenterRepo.save((AadharCenterRegister) any())).thenReturn(new AadharCenterRegister());
-        when(aadharCenterRepo.findById((String) any())).thenReturn(Optional.empty());
-        new BusinessException("An error occurred", "An error occurred");
-
-        new BusinessException("An error occurred", "An error occurred");
-
-        aadharCenterServiceImp.createAppointment("42", new Appointment("42", "Appointment Start Time",
-                "Appointment End Time", AppointmentStatus.Available, "2020-03-01"));
+        when(aadharCenterRepo.findById((String) any())).thenReturn(ofResult);
+        assertTrue(aadharCenterServiceImp.deleteAppointment("42"));
+        verify(aadharCenterRepo).save((AadharCenterRegister) any());
+        verify(aadharCenterRepo, atLeast(1)).findById((String) any());
     }
+
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#deleteAppointment(String)}
+     */
+    @Test
+    void testDeleteAppointment4() {
+        AadharCenterRegister aadharCenterRegister = new AadharCenterRegister();
+        aadharCenterRegister.setSlots(new ArrayList<>());
+        Optional<AadharCenterRegister> ofResult = Optional.of(aadharCenterRegister);
+        when(aadharCenterRepo.save((AadharCenterRegister) any()))
+                .thenThrow(new BusinessException("An error occurred", "An error occurred"));
+        when(aadharCenterRepo.findById((String) any())).thenReturn(ofResult);
+        assertThrows(BusinessException.class, () -> aadharCenterServiceImp.deleteAppointment("42"));
+        verify(aadharCenterRepo).save((AadharCenterRegister) any());
+        verify(aadharCenterRepo, atLeast(1)).findById((String) any());
+    }
+
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#getAllSlots(String)}
+     */
+    @Test
+    void testGetAllSlots2() {
+        AadharCenterRegister aadharCenterRegister = new AadharCenterRegister();
+        aadharCenterRegister.setSlots(new ArrayList<>());
+        Optional<AadharCenterRegister> ofResult = Optional.of(aadharCenterRegister);
+        when(aadharCenterRepo.findById((String) any())).thenReturn(ofResult);
+        assertThrows(BusinessException.class, () -> aadharCenterServiceImp.getAllSlots("42"));
+        verify(aadharCenterRepo).findById((String) any());
+    }
+
+    /**
+     * Method under test: {@link AadharCenterServiceImp#getAllSlots(String)}
+     */
+    @Test
+    void testGetAllSlots3() {
+        AadharCenterRegister aadharCenterRegister = mock(AadharCenterRegister.class);
+        when(aadharCenterRegister.getSlots()).thenThrow(new BusinessException("An error occurred", "An error occurred"));
+        Optional<AadharCenterRegister> ofResult = Optional.of(aadharCenterRegister);
+        when(aadharCenterRepo.findById((String) any())).thenReturn(ofResult);
+        assertThrows(BusinessException.class, () -> aadharCenterServiceImp.getAllSlots("42"));
+        verify(aadharCenterRepo).findById((String) any());
+        verify(aadharCenterRegister).getSlots();
+    }
+
 }
 

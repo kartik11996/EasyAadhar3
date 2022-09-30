@@ -107,7 +107,6 @@ public class AadharCenterServiceImp implements AadharCenterService{
         return acr;
     }
 
-
     @Override
     public AadharCenterRegister getCenterById(String id) {
         Optional<AadharCenterRegister>acr = ACRepo.findById(id);
@@ -143,14 +142,12 @@ public class AadharCenterServiceImp implements AadharCenterService{
         else{
             throw new BusinessException("609","No center Exits with this id, Please choose another center");
         }
-
     }
 
     @Override
     public boolean deleteAppointment(String id) {
         AadharCenterRegister acr = ACRepo.findById(id).get();
         Optional<AadharCenterRegister>optional=ACRepo.findById(id);
-
         if (optional.isPresent()){
             List<Appointment> a=acr.getSlots();
             a.clear();
