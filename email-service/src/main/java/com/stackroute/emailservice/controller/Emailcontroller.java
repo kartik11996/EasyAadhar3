@@ -14,26 +14,12 @@ public class Emailcontroller {
 	@Autowired
 	  private EmailService service;
 
-//
-//	@RabbitListener(queues =  RabbitMqConfiguration.QUEUE)
-//	public String sendSimpleMessage1(BookingDetails bookingDetails) {
-//
-//
-//		System.out.println(bookingDetails.toString());
-////
-////		SimpleMailMessage msg=new SimpleMailMessage();
-////
-////		msg.setTo(bookingDetails.getEmailId());
-////		msg.setSubject("Booking Details ");
-////		msg.setText("booking details ends");
-////		sender.send(msg);
-//		return "Mail Send Successfully ";
-//	}
 	@PostMapping("/send")
-	public String SendEmail(@RequestParam String email,@RequestParam String subject,@RequestParam String body)throws  emailNotSendException {
+	public String  SendEmail(@RequestParam String email,@RequestParam String subject,@RequestParam String body)throws  emailNotSendException {
 
 		try {
-	 return service.sendSimpleMessage(email, subject, body);
+			service.sendSimpleMessage(email, subject, body);
+	 return "email send ";
 
 		}catch(emailNotSendException e) {
 			

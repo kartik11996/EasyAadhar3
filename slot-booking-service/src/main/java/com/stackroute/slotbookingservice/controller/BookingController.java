@@ -2,12 +2,9 @@ package com.stackroute.slotbookingservice.controller;
 
 import java.util.List;
 
-import com.stackroute.slotbookingservice.configuration.RabbitMqConfiguration;
 import com.stackroute.slotbookingservice.exception.BookingAlreadyExist;
 import com.stackroute.slotbookingservice.exception.BookingNotFoundException;
-import com.stackroute.slotbookingservice.model.Customer;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import com.stackroute.slotbookingservice.service.ConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,20 +25,24 @@ import com.stackroute.slotbookingservice.service.BookingService;
 public class BookingController {
     @Autowired
     private BookingService bookingService;
-//
-//    @Autowired
-//    private RabbitTemplate template;
 
-//    @RabbitListener(queues =  RabbitMqConfiguration.QUEUE2)
-//    public void consumeLoanDetailsFromQueue(Customer customer) {
-//        System.out.println("User details recieved from queue : " + customer);
-//        //   service.save(userDetails);
-//    }
+    @Autowired
+    private ConsumerService consumerService;
+
+
+    @PostMapping("/requestBooking")
+    public Booking requestBooking(String email){
+
+        return consumerService.generateBooking(email);
+
+
+    }
+
     @PostMapping("/saveBooking")
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking) throws BookingAlreadyExist {
 
         try {
-         //   template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,booking);
+
             return new ResponseEntity<>(bookingService.saveData(booking), HttpStatus.OK);
 
         } catch (BookingAlreadyExist e) {

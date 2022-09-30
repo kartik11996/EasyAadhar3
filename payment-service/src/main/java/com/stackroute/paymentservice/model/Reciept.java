@@ -26,6 +26,10 @@ public class Reciept {
  //private int slno;
 	@Id
  private String ORDERID;
+
+	private String customername;
+	private String emailId;
+	private String mobile;
  private String BANKNAME;
  private String BANKTXNID;   
  private String CURRENCY;
@@ -38,12 +42,9 @@ public class Reciept {
  private String TXNDATE ;
  private String TXNID;
 // private Map<String, String> details;
- 
-
-	public String getORDERID() {
+public String getORDERID() {
 		return ORDERID;
-	}
-	public void setORDERID(String oRDERID) {
+	}public void setORDERID(String oRDERID) {
 		ORDERID = oRDERID;
 	}
 public String getBANKNAME() {

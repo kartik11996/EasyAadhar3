@@ -1,10 +1,13 @@
 package com.stackroute.operatorservice.controller;
 
 import com.google.gson.Gson;
+import com.stackroute.operatorservice.configuration.RabbitMqConfiguration;
+import com.stackroute.operatorservice.dto.OperatorDto;
 import com.stackroute.operatorservice.exception.BusinessException;
 import com.stackroute.operatorservice.model.AadharCenterRegister;
 import com.stackroute.operatorservice.model.Appointment;
 import com.stackroute.operatorservice.service.AadharCenterService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,6 +27,9 @@ public class AadharCenterController {
     private AadharCenterService ACService;
     private ResponseEntity responseEntity;
 
+    @Autowired
+    private RabbitTemplate template;
+
     public AadharCenterController(){
 
     }
@@ -33,6 +37,21 @@ public class AadharCenterController {
     public AadharCenterController(AadharCenterService aadharCenterService){
         this.ACService=aadharCenterService;
     }
+
+
+    @PostMapping("/createBooking")
+    public void createBooking(@RequestBody OperatorDto dto){
+
+
+
+       template.convertAndSend(RabbitMqConfiguration.EXCHANGE3,
+               RabbitMqConfiguration.ROUTING_KEY3,dto);
+
+
+        System.out.println(dto);
+
+    }
+
 
     @PostMapping("/saveaadharcenter")
     public ResponseEntity<?> create(@RequestParam("AadharCenterDetails") String aadharcenter, @RequestParam("file") MultipartFile file) throws IOException {

@@ -1,10 +1,11 @@
 package com.stackroute.customerservice.controller;
 
-//import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
-//import java.util.Optional;
+
+
 
 import com.stackroute.customerservice.exception.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -28,24 +29,15 @@ public class CustomerController {
 	
 	private CustomerService customerService;
 
-//    @Autowired
-//    private RabbitTemplate template;
 
     @Autowired
     public CustomerController(CustomerService customerService) {this.customerService = customerService;}
 
 
-    //receiving data from authentication service
-//    @RabbitListener(queues =  RabbitMqConfiguration.QUEUE)
-//    public void consumeLoanDetailsFromQueue(String email) {
-//        System.out.println("User details recieved from queue : " + email);
-//     //   service.save(userDetails);
-//    }
     @PostMapping("/addCustomer")
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         try {
             if (customer.getName() == null
-                    || customer.getEmail() == null
                     || customer.getMobile() == null
                     || customer.getAddress() == null
                     || customer.getNationality() == null
@@ -58,9 +50,7 @@ public class CustomerController {
 
 
 
-            // sending data to slot booking service
 
-         //   template.convertAndSend(RabbitMqConfiguration.EXCHANGE2,RabbitMqConfiguration.ROUTING_KEY2,customer);
 
             return new ResponseEntity<>(customerService.saveCustomer(customer), HttpStatus.CREATED);
 

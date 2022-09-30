@@ -20,8 +20,8 @@ import com.stackroute.authenticationservice.service.UserService;
 @RequestMapping("/api")
 public class UserController {
 
-//    @Autowired
-//    private RabbitTemplate template;
+   @Autowired
+   private RabbitTemplate template;
     @Autowired
     private UserService userService;
 
@@ -35,7 +35,7 @@ public class UserController {
     public ResponseEntity<?> registerNewUser(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
             User user=userService.registerNewUser(userName,userPassword);
-       //   template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,userName);
+         template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,userName);
             return new ResponseEntity<>(user ,HttpStatus.OK);
         
     	}catch(UserAlreadyExistException e) {
@@ -50,8 +50,9 @@ public class UserController {
    
     public ResponseEntity<?> registerNewOperator(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
-    		
-        return new ResponseEntity<>( userService.registerNewOperator(userName,userPassword),HttpStatus.OK);
+            User user=userService.registerNewOperator(userName,userPassword);
+            template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY1,userName);
+        return new ResponseEntity<>( user,HttpStatus.OK);
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);

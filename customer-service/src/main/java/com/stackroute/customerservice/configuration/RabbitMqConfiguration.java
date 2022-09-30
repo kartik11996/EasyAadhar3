@@ -8,16 +8,17 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 public class RabbitMqConfiguration {
 
+    public static final String EXCHANGE = "exchange.topic";
     public static final String QUEUE = "user_queue";
-    public static final String EXCHANGE = "user_exchange";
+
     public static final String ROUTING_KEY = "user_routingKey";
 
 
     public static final String QUEUE2 = "customer_queue";
-    public static final String EXCHANGE2 = "customer_exchange";
+
     public static final String ROUTING_KEY2 = "customer_routingKey";
 
 
@@ -49,7 +50,7 @@ public class RabbitMqConfiguration {
 
     @Bean
     public TopicExchange exchange2() {
-        return new TopicExchange(EXCHANGE2);
+        return new TopicExchange(EXCHANGE);
     }
 
 
