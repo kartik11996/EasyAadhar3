@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -34,6 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
 class AadharCenterControllerTest {
     @Autowired
     private AadharCenterController aadharCenterController;
+
+    @MockBean
+    private RabbitTemplate rabbitTemplate;
 
     @MockBean
     private AadharCenterService aadharCenterService;
