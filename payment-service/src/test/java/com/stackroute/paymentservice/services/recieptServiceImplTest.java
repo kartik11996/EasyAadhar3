@@ -31,16 +31,17 @@ class recieptServiceImplTest {
     @Autowired
     private recieptServiceImpl recieptServiceImpl;
 
-    /**
-     * Method under test: {@link recieptServiceImpl#getPaymentDetails(String)}
-     */
+
     @Test
     void testGetPaymentDetails() {
         Reciept reciept = new Reciept();
         reciept.setBANKNAME("B ANKNAME");
         reciept.setBANKTXNID("B ANKTXNID");
         reciept.setCURRENCY("GBP");
+        reciept.setCustomername("Customername");
+        reciept.setEmailId("42");
         reciept.setGATEWAYNAME("G ATEWAYNAME");
+        reciept.setMobile("Mobile");
         reciept.setORDERID("O RDERID");
         reciept.setPAYMENTMODE("P AYMENTMODE");
         reciept.setRESPCODE("R ESPCODE");
@@ -55,9 +56,7 @@ class recieptServiceImplTest {
         verify(paymentRepository).findById((String) any());
     }
 
-    /**
-     * Method under test: {@link recieptServiceImpl#getPaymentDetails(String)}
-     */
+
     @Test
     void testGetPaymentDetails2() {
         when(paymentRepository.findById((String) any())).thenReturn(Optional.empty());
@@ -65,9 +64,7 @@ class recieptServiceImplTest {
         verify(paymentRepository).findById((String) any());
     }
 
-    /**
-     * Method under test: {@link recieptServiceImpl#getPaymentDetails(String)}
-     */
+
     @Test
     void testGetPaymentDetails3() {
         when(paymentRepository.findById((String) any())).thenThrow(new RecieptNotFoundException("An error occurred"));
@@ -75,9 +72,7 @@ class recieptServiceImplTest {
         verify(paymentRepository).findById((String) any());
     }
 
-    /**
-     * Method under test: {@link recieptServiceImpl#getAllPayment()}
-     */
+
     @Test
     void testGetAllPayment() {
         when(paymentRepository.findAll()).thenReturn(new ArrayList<>());
@@ -85,16 +80,17 @@ class recieptServiceImplTest {
         verify(paymentRepository).findAll();
     }
 
-    /**
-     * Method under test: {@link recieptServiceImpl#getAllPayment()}
-     */
+
     @Test
     void testGetAllPayment2() {
         Reciept reciept = new Reciept();
         reciept.setBANKNAME("Reciept is not available in the database");
         reciept.setBANKTXNID("Reciept is not available in the database");
         reciept.setCURRENCY("GBP");
+        reciept.setCustomername("Reciept is not available in the database");
+        reciept.setEmailId("42");
         reciept.setGATEWAYNAME("Reciept is not available in the database");
+        reciept.setMobile("Reciept is not available in the database");
         reciept.setORDERID("Reciept is not available in the database");
         reciept.setPAYMENTMODE("Reciept is not available in the database");
         reciept.setRESPCODE("Reciept is not available in the database");
@@ -113,9 +109,7 @@ class recieptServiceImplTest {
         verify(paymentRepository).findAll();
     }
 
-    /**
-     * Method under test: {@link recieptServiceImpl#getAllPayment()}
-     */
+
     @Test
     void testGetAllPayment3() {
         when(paymentRepository.findAll()).thenThrow(new RecieptNotFoundException("An error occurred"));

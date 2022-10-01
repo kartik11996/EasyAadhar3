@@ -30,9 +30,7 @@ class RecieptControllerTest {
     @MockBean
     private recieptService recieptService;
 
-    /**
-     * Method under test: {@link RecieptController#getAllPayment()}
-     */
+
     @Test
     void testGetAllPayment() throws Exception {
         when(recieptService.getAllPayment()).thenReturn(new ArrayList<>());
@@ -45,9 +43,7 @@ class RecieptControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link RecieptController#getAllPayment()}
-     */
+
     @Test
     void testGetAllPayment2() throws Exception {
         when(recieptService.getAllPayment()).thenThrow(new RecieptNotFoundException("An error occurred"));
@@ -60,9 +56,7 @@ class RecieptControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("An error occurred"));
     }
 
-    /**
-     * Method under test: {@link RecieptController#getAllPayment()}
-     */
+
     @Test
     void testGetAllPayment3() throws Exception {
         when(recieptService.getAllPayment()).thenReturn(new ArrayList<>());
@@ -76,41 +70,7 @@ class RecieptControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link RecieptController#getPaymentDetailes(String)}
-     */
-    @Test
-    void testGetPaymentDetailes() throws Exception {
-        Reciept reciept = new Reciept();
-        reciept.setBANKNAME("B ANKNAME");
-        reciept.setBANKTXNID("B ANKTXNID");
-        reciept.setCURRENCY("GBP");
-        reciept.setGATEWAYNAME("G ATEWAYNAME");
-        reciept.setORDERID("O RDERID");
-        reciept.setPAYMENTMODE("P AYMENTMODE");
-        reciept.setRESPCODE("R ESPCODE");
-        reciept.setRESPMSG("R ESPMSG");
-        reciept.setSTATUS("S TATUS");
-        reciept.setTXNAMOUNT("10");
-        reciept.setTXNDATE("T XNDATE");
-        reciept.setTXNID("T XNID");
-        when(recieptService.getPaymentDetails((String) any())).thenReturn(reciept);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/history/find/{id}", "42");
-        MockMvcBuilders.standaloneSetup(recieptController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"orderid\":\"O RDERID\",\"bankname\":\"B ANKNAME\",\"currency\":\"GBP\",\"gatewayname\":\"G ATEWAYNAME\",\"paymentmode\":\"P"
-                                        + " AYMENTMODE\",\"respcode\":\"R ESPCODE\",\"respmsg\":\"R ESPMSG\",\"status\":\"S TATUS\",\"txnid\":\"T XNID\",\"txnamount"
-                                        + "\":\"10\",\"txndate\":\"T XNDATE\",\"banktxnid\":\"B ANKTXNID\"}"));
-    }
 
-    /**
-     * Method under test: {@link RecieptController#getPaymentDetailes(String)}
-     */
     @Test
     void testGetPaymentDetailes2() throws Exception {
         when(recieptService.getPaymentDetails((String) any()))

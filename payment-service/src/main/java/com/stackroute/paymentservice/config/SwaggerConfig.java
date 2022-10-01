@@ -25,9 +25,9 @@ public class SwaggerConfig {
 	
      private ApiInfo apiInfo() {
 		 ApiInfo apiInfo = new ApiInfo(
-				 "EasyAadhar Slot Booking Application",
+				 "Payment Service Application ",
 	                "An Application to search payment for a payment repository by orderId",
-	                "Payment Service Application",
+	                "EasyAadhar Slot Booking Application",
 	                "Terms of service",
 	                "easyaadhar@gmail.com",
 	                "License of API",

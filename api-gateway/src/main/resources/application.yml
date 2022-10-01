@@ -20,7 +20,7 @@ spring:
           uri: http://localhost:8083/
           predicates:
             - Path=/CustomerDetails/**
-        #- id : authenticationservice
+       
         - id: paymentservice
           uri: http://localhost:8080/
           predicates:
@@ -33,10 +33,7 @@ spring:
           uri: http://localhost:8085/
           predicates:
            - Path=/api/**
-        #- id: authenticationservice
-         # uri: http://localhost:8085/
-          #predicates:
-           # - Path=/api/**
+
 
         - id: slotbookingservice
           uri: http://localhost:9090/

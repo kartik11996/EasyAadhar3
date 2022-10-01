@@ -1,8 +1,11 @@
 package com.stackroute.paymentservice.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import com.stackroute.paymentservice.dto.BookingDto;
 import com.stackroute.paymentservice.model.Payment;
 import com.stackroute.paymentservice.model.Reciept;
 import com.stackroute.paymentservice.repository.PaymentRepository;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
@@ -38,34 +42,46 @@ class PaymentControllerTest {
     @MockBean
     private PaymentRepository paymentRepository;
 
-    /**
-     * Method under test: {@link PaymentController#getRedirect(String, String, String)}
-     */
+    @MockBean
+    private RabbitTemplate rabbitTemplate;
+
+
     @Test
     @Disabled("TODO: Complete this test")
     void testGetRedirect() throws Exception {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        
-        //   In order to prevent getRedirect(String, String, String)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   getRedirect(String, String, String).
-        
+
 
         (new PaymentController()).getRedirect("42", "10", "42");
     }
 
-    /**
-     * Method under test: {@link PaymentController#getResponseRedirect(HttpServletRequest, Model)}
-     */
+
+    @Test
+    void testConstructor() {
+        PaymentController actualPaymentController = new PaymentController();
+        actualPaymentController.saveOperator(new BookingDto(123, "42", "2020-03-01", "Appointment Time", "Customername",
+                "Center Name", "Mobile", "42 Main St"));
+        BookingDto bookingDto = actualPaymentController.bookingDto;
+        assertEquals("42 Main St", bookingDto.getAddress());
+        assertEquals("Mobile", bookingDto.getMobile());
+        assertEquals("42", bookingDto.getEmailId());
+        assertEquals("Customername", bookingDto.getCustomername());
+        assertEquals("Center Name", bookingDto.getCenterName());
+        assertEquals("Appointment Time", bookingDto.getAppointmentTime());
+        assertEquals(123, bookingDto.getAppointmentId());
+        assertEquals("2020-03-01", bookingDto.getAppointmentDate());
+    }
+
+
     @Test
     void testGetResponseRedirect() throws Exception {
         Reciept reciept = new Reciept();
         reciept.setBANKNAME("B ANKNAME");
         reciept.setBANKTXNID("B ANKTXNID");
         reciept.setCURRENCY("GBP");
+        reciept.setCustomername("Customername");
+        reciept.setEmailId("42");
         reciept.setGATEWAYNAME("G ATEWAYNAME");
+        reciept.setMobile("Mobile");
         reciept.setORDERID("O RDERID");
         reciept.setPAYMENTMODE("P AYMENTMODE");
         reciept.setRESPCODE("R ESPCODE");
@@ -75,6 +91,7 @@ class PaymentControllerTest {
         reciept.setTXNDATE("T XNDATE");
         reciept.setTXNID("T XNID");
         when(paymentRepository.save((Reciept) any())).thenReturn(reciept);
+        doNothing().when(rabbitTemplate).convertAndSend((String) any(), (String) any(), (Object) any());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/pgresponse");
         MockMvcBuilders.standaloneSetup(paymentController)
                 .build()
@@ -84,37 +101,6 @@ class PaymentControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attributeExists("parameters", "result"))
                 .andExpect(MockMvcResultMatchers.view().name("report"))
                 .andExpect(MockMvcResultMatchers.forwardedUrl("report"));
-    }
-
-    /**
-     * Method under test: {@link PaymentController#home()}
-     */
-    @Test
-    void testHome() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/");
-        MockMvcBuilders.standaloneSetup(paymentController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(0))
-                .andExpect(MockMvcResultMatchers.view().name("home"))
-                .andExpect(MockMvcResultMatchers.forwardedUrl("home"));
-    }
-
-    /**
-     * Method under test: {@link PaymentController#home()}
-     */
-    @Test
-    void testHome2() throws Exception {
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(paymentController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().size(0))
-                .andExpect(MockMvcResultMatchers.view().name("home"))
-                .andExpect(MockMvcResultMatchers.forwardedUrl("home"));
     }
 }
 
