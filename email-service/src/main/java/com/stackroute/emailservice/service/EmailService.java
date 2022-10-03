@@ -33,6 +33,7 @@ public class EmailService {
 			sender.send(msg);
 			System.out.println("slot booked for -->  "+booking);
 		}catch (Exception e){
+			e.printStackTrace();
 			System.out.println("message not send !!! ");
 		}
 
@@ -54,7 +55,7 @@ public class EmailService {
 
 		return "Mail Send Successfully";
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 			throw new emailNotSendException("mail not send or wrong email id");
 		}
 		 

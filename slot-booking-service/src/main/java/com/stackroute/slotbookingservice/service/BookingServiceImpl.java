@@ -16,9 +16,6 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepo bookingRepo;
 
-
-
-
     @Override
     public Booking saveData(Booking booking) throws BookingAlreadyExist {
         bookingRepo.save(booking);

@@ -57,7 +57,7 @@ public class SwaggerConfiguration {
         private ApiInfo getInfo() {
             ApiInfo apiInfo = new ApiInfo(
                     "EasyAadhar Slot Booking Application",
-                    "An Application to Authenticate  by email and password",
+                    "An Application for booking the slot to update the Aadhar ",
                     "Authentication Service Application",
                     "Terms of service",
                     "easyaadhar@gmail.com",

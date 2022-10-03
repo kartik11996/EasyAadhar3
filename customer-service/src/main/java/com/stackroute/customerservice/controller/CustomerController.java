@@ -47,11 +47,6 @@ public class CustomerController {
                     || customer.getRelativeAadharNumber().isEmpty()) {
                 return new ResponseEntity<>("Please enter all the required fields", HttpStatus.BAD_REQUEST);
             }
-
-
-
-
-
             return new ResponseEntity<>(customerService.saveCustomer(customer), HttpStatus.CREATED);
 
         } catch (CustomerAlreadyExistsException e) {

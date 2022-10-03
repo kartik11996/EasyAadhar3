@@ -15,6 +15,9 @@ import com.stackroute.authenticationservice.exception.UserAlreadyExistException;
 import com.stackroute.authenticationservice.model.User;
 import com.stackroute.authenticationservice.service.UserService;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 @RestController
 @RequestMapping("/api")
@@ -34,9 +37,14 @@ public class UserController {
     @PostMapping({"/registerNewUser"})
     public ResponseEntity<?> registerNewUser(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
+            if(isValidPassword(userPassword)) {
             User user=userService.registerNewUser(userName,userPassword);
          template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY,userName);
             return new ResponseEntity<>(user ,HttpStatus.OK);
+            }else {
+                return  new ResponseEntity<>( "password must contain alphabets ,number," +
+                        "special character and minimum size should be 6  ",HttpStatus.CONFLICT);
+            }
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);
@@ -50,9 +58,14 @@ public class UserController {
    
     public ResponseEntity<?> registerNewOperator(@RequestParam String userName, @RequestParam String userPassword) throws UserAlreadyExistException {
     	try {
-            User user=userService.registerNewOperator(userName,userPassword);
-            template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY1,userName);
-        return new ResponseEntity<>( user,HttpStatus.OK);
+            if(isValidPassword(userPassword)) {
+                User user = userService.registerNewOperator(userName, userPassword);
+                template.convertAndSend(RabbitMqConfiguration.EXCHANGE, RabbitMqConfiguration.ROUTING_KEY1, userName);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            }else {
+              return  new ResponseEntity<>( "password must contain alphabets ,number," +
+                      "special character and minimum size should be 6  ",HttpStatus.CONFLICT);
+            }
         
     	}catch(UserAlreadyExistException e) {
     		return new ResponseEntity<>( e.getMsg(),HttpStatus.CONFLICT);
@@ -61,8 +74,8 @@ public class UserController {
 
         }
     }
-    
-    
+
+
     @GetMapping({"/operator"})
     @PreAuthorize("hasRole('Operator')")
     public String forOperator(){
@@ -74,5 +87,20 @@ public class UserController {
     @PreAuthorize("hasRole('User')")
     public String forUser(){
         return "welcome in user board";
+    }
+
+
+
+
+    public static boolean isValidPassword(String password) {
+
+        String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{6,20}$";
+
+        Pattern p = Pattern.compile(regex);
+        if (password == null) {
+            return false;
+        }
+        Matcher m = p.matcher(password);
+        return m.matches();
     }
 }

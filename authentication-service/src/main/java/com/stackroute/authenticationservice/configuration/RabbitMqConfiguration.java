@@ -12,14 +12,14 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfiguration {
 
     public static final String EXCHANGE = "exchange.topic";
-    public static final String QUEUE = "user_queue";
 
+    public static final String QUEUE = "user_queue";
     public static final String ROUTING_KEY = "user_routingKey";
 
 
     public static final String QUEUE1 = "user_queue1";
-
     public static final String ROUTING_KEY1 = "user_routingKey1";
+
     @Bean
     public Queue queue() {
         return new Queue(QUEUE);

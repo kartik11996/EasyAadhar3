@@ -47,6 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 		template.convertAndSend(RabbitMqConfiguration.EXCHANGE,RabbitMqConfiguration.ROUTING_KEY2,customer1);
 
 		 CR.save(customer);
+
 		 System.out.println("from service method " + customer);
 		 return "Customer has been added successfully";
 	}

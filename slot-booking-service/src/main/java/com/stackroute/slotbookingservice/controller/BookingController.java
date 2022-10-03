@@ -37,21 +37,21 @@ public class BookingController {
 
 
     }
-
-    @PostMapping("/saveBooking")
-    public ResponseEntity<?> saveBooking(@RequestBody Booking booking) throws BookingAlreadyExist {
-
-        try {
-
-            return new ResponseEntity<>(bookingService.saveData(booking), HttpStatus.OK);
-
-        } catch (BookingAlreadyExist e) {
-
-            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
-
-        }
-
-    }
+//
+//    @PostMapping("/saveBooking")
+//    public ResponseEntity<?> saveBooking(@RequestBody Booking booking) throws BookingAlreadyExist {
+//
+//        try {
+//
+//            return new ResponseEntity<>(bookingService.saveData(booking), HttpStatus.OK);
+//
+//        } catch (BookingAlreadyExist e) {
+//
+//            return new ResponseEntity<>(e.getErrorMessage(), HttpStatus.CONFLICT);
+//
+//        }
+//
+//    }
 
 
     @GetMapping("/getAllBooking")

@@ -35,6 +35,5 @@ public class Booking {
     private String centerName;
     private String mobile;
     private String address;
-
     
 }
