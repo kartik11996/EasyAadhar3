@@ -37,6 +37,5 @@ public class recieptServiceImpl implements recieptService {
 		return list;
 	}
 
-	
 
 }

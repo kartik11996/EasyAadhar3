@@ -39,16 +39,32 @@ public class AadharCenterController {
     }
 
 
-    @PostMapping("/createBooking")
-    public void createBooking(@RequestBody OperatorDto dto){
+    @PostMapping("/selectSlot")
+    public void selectSlot(String centerId,String appointmentId ){
 
 
+
+        OperatorDto op=new OperatorDto();
+
+        AadharCenterRegister center = ACService.getCenterById(centerId);
+
+        List<Appointment> listOfAllslots=center.getSlots();
+
+        Appointment appointment=listOfAllslots.stream()
+                .filter(x->x.getAppointmentId().equals(appointmentId)).findFirst().get();
+
+
+        System.out.println(appointment);
+        op.setCenterName(center.getCenterName());
+        op.setCenterAddress(center.getAddress());
+        op.setAppointmentDate(appointment.getAppointmentDate());
+        op.setAppointmentTime(appointment.getAppointmentEndTime());
 
        template.convertAndSend(RabbitMqConfiguration.EXCHANGE3,
-               RabbitMqConfiguration.ROUTING_KEY3,dto);
+               RabbitMqConfiguration.ROUTING_KEY3,op);
 
 
-        System.out.println(dto);
+        System.out.println(op);
 
     }
 
